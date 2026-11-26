@@ -1,0 +1,3753 @@
+:root {
+    --ui-accent: #107c41;
+    --ui-accent-dark: #0b5c30;
+    --ui-focus: rgba(16, 124, 65, .18);
+    --ui-ease: cubic-bezier(.2, .7, .2, 1);
+    --ui-spring: cubic-bezier(.16, 1, .3, 1);
+}
+
+.ui-alert-backdrop {
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, .48);
+    animation: ui-backdrop-enter .18s ease both;
+}
+
+.ui-alert-dialog {
+    width: min(100%, 440px);
+    padding: 24px;
+    border: 1px solid #d6ddd8;
+    border-radius: 14px;
+    background: #fff;
+    color: #202a35;
+    box-shadow: 0 18px 56px rgba(15, 23, 42, .28);
+    animation: ui-dialog-enter .24s var(--ui-spring) both;
+}
+
+.ui-alert-dialog h2 {
+    margin: 0 0 10px;
+    font-size: 19px;
+}
+
+.ui-alert-dialog p {
+    margin: 0;
+    color: #526158;
+    line-height: 1.55;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.ui-alert-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+:is(button, [type="button"], [type="submit"], [type="reset"], .button, .btn, .ui-alert-button, .ui-theme-toggle) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    line-height: 1.2;
+    vertical-align: middle;
+}
+
+.ui-alert-button {
+    min-width: 84px;
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 1px solid var(--ui-accent);
+    border-radius: 7px;
+    background: var(--ui-accent);
+    color: #fff;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.ui-alert-button:hover {
+    background: var(--ui-accent-dark);
+}
+
+.ui-confirm-backdrop {
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, .48);
+    animation: ui-backdrop-enter .18s ease both;
+}
+
+.ui-confirm-dialog {
+    width: min(100%, 480px);
+    padding: 24px;
+    border: 1px solid #d6ddd8;
+    border-radius: 14px;
+    background: #fff;
+    color: #202a35;
+    box-shadow: 0 18px 56px rgba(15, 23, 42, .28);
+    animation: ui-dialog-enter .24s var(--ui-spring) both;
+}
+
+.ui-confirm-dialog h2 {
+    margin: 0 0 10px;
+    font-size: 19px;
+}
+
+.ui-confirm-dialog p {
+    margin: 0;
+    color: #526158;
+    line-height: 1.55;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.ui-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.ui-confirm-actions button {
+    min-width: 84px;
+    min-height: 42px;
+    padding: 8px 16px;
+    border: 1px solid #d5ddd7;
+    border-radius: 7px;
+    background: #fff;
+    color: #344139;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+.ui-confirm-actions .ui-confirm-danger {
+    border-color: #b3261e;
+    background: #b3261e;
+    color: #fff;
+}
+
+.ui-confirm-actions .ui-confirm-accept {
+    border-color: var(--ui-accent);
+    background: var(--ui-accent);
+    color: #fff;
+}
+
+@keyframes ui-content-out {
+    to { opacity: 0; }
+}
+
+@keyframes ui-content-in {
+    from { opacity: 0; transform: translateY(3px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: ui-navigation-out .16s ease both;
+}
+
+::view-transition-new(root) {
+    animation: ui-navigation-in .42s var(--ui-spring) both;
+}
+
+::view-transition-old(active-sheet) {
+    animation: ui-sheet-out-left .24s ease both;
+}
+
+::view-transition-new(active-sheet) {
+    animation: ui-sheet-in-right .42s var(--ui-spring) both;
+}
+
+html[data-ui-transition="content"]::view-transition-old(active-sheet) {
+    animation: ui-content-out .14s ease both;
+}
+
+html[data-ui-transition="content"]::view-transition-new(active-sheet) {
+    animation: ui-content-in .24s var(--ui-spring) both;
+}
+
+html[data-ui-transition="sheet-reverse"]::view-transition-old(active-sheet) {
+    animation-name: ui-sheet-out-right;
+}
+
+html[data-ui-transition="sheet-reverse"]::view-transition-new(active-sheet) {
+    animation-name: ui-sheet-in-left;
+}
+
+::view-transition-old(workspace-home),
+::view-transition-old(workspace-editor) {
+    animation: ui-workspace-out .18s ease both;
+}
+
+::view-transition-new(workspace-home),
+::view-transition-new(workspace-editor) {
+    animation: ui-workspace-in .4s var(--ui-spring) both;
+}
+
+::view-transition-old(active-tab),
+::view-transition-old(active-section) {
+    animation: ui-content-out .14s ease both;
+}
+
+::view-transition-new(active-tab),
+::view-transition-new(active-section) {
+    animation: ui-content-in .24s var(--ui-spring) both;
+}
+
+#tables-wrapper > .table-container.active,
+#tablesContainerWrapper > .table-container.active {
+    view-transition-name: active-sheet;
+}
+
+#tabs .tab[aria-selected="true"],
+#tabs-bar .excel-tab.active {
+    view-transition-name: active-tab;
+}
+
+.template-tab[aria-selected="true"] {
+    view-transition-name: active-tab;
+}
+
+.section-table {
+    view-transition-name: active-section;
+}
+
+#homeView {
+    view-transition-name: workspace-home;
+}
+
+#editorView {
+    view-transition-name: workspace-editor;
+}
+
+:focus-visible {
+    outline: 2px solid var(--ui-accent);
+    outline-offset: 2px;
+}
+
+button,
+a[href],
+summary,
+[onclick],
+[role="button"],
+.position,
+.sheet-row,
+.template-tab,
+.excel-tab,
+.tab,
+.tpl,
+.pos {
+    transition:
+        color .18s ease,
+        background-color .18s ease,
+        border-color .18s ease,
+        box-shadow .2s ease,
+        opacity .18s ease,
+        transform .18s var(--ui-ease);
+}
+
+[onclick] {
+    cursor: pointer;
+}
+
+button:not(:disabled):hover,
+[role="button"]:not([aria-disabled="true"]):hover {
+    transform: translateY(-1px);
+}
+
+button:not(:disabled):active,
+[role="button"]:not([aria-disabled="true"]):active {
+    transform: translateY(0) scale(.985);
+}
+
+button.pt:hover,
+button.pt:active,
+.rail button:hover {
+    transform: none;
+}
+
+.btn:hover,
+.button:hover,
+.sb:hover,
+.position:hover,
+.pos:hover,
+.recent-actions a:hover,
+.recent-actions button:hover,
+.resume-actions button:hover {
+    box-shadow: 0 7px 18px rgba(28, 36, 32, .12);
+}
+
+.btn:active,
+.button:active,
+.sb:active,
+.position:active,
+.pos:active,
+.recent-actions a:active,
+.recent-actions button:active,
+.resume-actions button:active {
+    box-shadow: 0 2px 6px rgba(28, 36, 32, .12);
+}
+
+button:disabled,
+button[aria-disabled="true"],
+[role="button"][aria-disabled="true"] {
+    cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background-color .18s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):hover:not(:focus):not(:disabled),
+select:hover:not(:focus):not(:disabled),
+textarea:hover:not(:focus):not(:disabled) {
+    border-color: #b7c2bb;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+    cursor: not-allowed;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    border-color: var(--ui-accent);
+    box-shadow: 0 0 0 3px var(--ui-focus);
+}
+
+input[type="checkbox"],
+input[type="radio"],
+summary,
+label[for],
+th[contenteditable="true"],
+td[contenteditable="true"] {
+    accent-color: var(--ui-accent);
+}
+
+main,
+body > .wrap,
+body > #results {
+    animation: ui-page-enter .36s var(--ui-ease) both;
+}
+
+.card,
+.cd,
+.lc,
+.paper,
+.resume-dialog {
+    animation: ui-surface-enter .52s var(--ui-spring) both;
+}
+
+.position:hover,
+.btn:hover,
+.button:hover,
+.sheet-row:hover,
+.template-tab:hover,
+.excel-tab:hover,
+.tab:hover,
+.tpl:hover,
+.pos:hover {
+    transform: translateY(-2px);
+}
+
+.resume-backdrop:not([hidden]),
+.resume-modal-backdrop:not([hidden]),
+.pdf-modal-backdrop:not([hidden]) {
+    animation: ui-backdrop-enter .18s ease both;
+}
+
+.resume-dialog,
+.resume-modal,
+.pdf-modal {
+    animation-name: ui-dialog-enter;
+    animation-duration: .42s;
+    animation-timing-function: var(--ui-spring);
+}
+
+.ui-reveal {
+    opacity: 0;
+    transform: translateY(14px) scale(.99);
+    transition:
+        opacity .5s var(--ui-spring) var(--ui-stagger, 0ms),
+        transform .6s var(--ui-spring) var(--ui-stagger, 0ms);
+}
+
+.ui-reveal.ui-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.resume-backdrop,
+.resume-modal-backdrop,
+.pdf-modal-backdrop {
+    transition: opacity .22s ease, display .22s allow-discrete;
+    transition-behavior: allow-discrete;
+}
+
+.resume-backdrop[hidden],
+.resume-modal-backdrop[hidden],
+.pdf-modal-backdrop[hidden] {
+    opacity: 0;
+}
+
+.position {
+    transition:
+        opacity .2s ease,
+        transform .25s var(--ui-spring),
+        display .2s allow-discrete;
+    transition-behavior: allow-discrete;
+}
+
+.position[hidden] {
+    opacity: 0;
+    transform: translateY(6px) scale(.99);
+}
+
+#positionDropdown {
+    transition: opacity .16s ease, display .16s allow-discrete;
+    transition-behavior: allow-discrete;
+    opacity: 1;
+}
+
+#positionDropdown:not(.open) {
+    opacity: 0;
+}
+
+button[aria-busy="true"] {
+    pointer-events: none;
+}
+
+button[aria-busy="true"]::after {
+    width: 12px;
+    height: 12px;
+    margin-left: 9px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    vertical-align: -2px;
+    animation: ui-spin .65s linear infinite;
+}
+
+@keyframes ui-page-enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes ui-surface-enter {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ui-backdrop-enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes ui-dialog-enter {
+    from { opacity: 0; transform: translateY(10px) scale(.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes ui-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes ui-navigation-out {
+    to { opacity: 0; transform: translateY(-4px); }
+}
+
+@keyframes ui-navigation-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ui-sheet-out-left {
+    to { opacity: 0; transform: translateX(-24px); }
+}
+
+@keyframes ui-sheet-in-right {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes ui-sheet-out-right {
+    to { opacity: 0; transform: translateX(24px); }
+}
+
+@keyframes ui-sheet-in-left {
+    from { opacity: 0; transform: translateX(-24px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes ui-workspace-out {
+    to { opacity: 0; transform: translateY(8px) scale(.995); }
+}
+
+@keyframes ui-workspace-in {
+    from { opacity: 0; transform: translateY(12px) scale(.995); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+
+    .ui-reveal {
+        opacity: 1;
+        transform: none;
+        transition-delay: 0s !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .ui-confirm-actions {
+        flex-direction: column-reverse;
+    }
+
+    .ui-confirm-actions button {
+        width: 100%;
+    }
+}
+
+@media print {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
+
+@media (max-width: 760px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    body > main,
+    body > .wrap,
+    body > #results {
+        width: 100%;
+        min-width: 0;
+    }
+
+    body > main {
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: clamp(1.35rem, 5vw, 1.8rem);
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    img,
+    video,
+    canvas,
+    svg {
+        max-width: 100%;
+    }
+
+    input,
+    select,
+    textarea {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .table-scroll,
+    .table-scroll.sc,
+    .tbl,
+    .sc {
+        max-width: 100%;
+        overscroll-behavior-x: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .card,
+    .cd,
+    .paper,
+    .empty {
+        min-width: 0;
+    }
+
+    body:has(> .rail) {
+        display: flex !important;
+        height: auto !important;
+        min-height: 100vh;
+        min-height: 100dvh;
+        flex-direction: column !important;
+        overflow-x: clip !important;
+        overflow-y: auto !important;
+    }
+
+    body:has(> .rail) .rail {
+        position: sticky;
+        z-index: 50;
+        top: 0;
+        bottom: auto;
+        order: 0;
+        display: flex !important;
+        width: 100% !important;
+        height: auto;
+        min-height: 54px;
+        flex: 0 0 auto !important;
+        flex-direction: row !important;
+        align-items: stretch;
+        gap: 2px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 5px max(8px, env(safe-area-inset-left)) !important;
+        border: 0;
+        border-bottom: 1px solid rgba(32, 42, 53, .12);
+        background: #fff;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body:has(> .rail) .rail button,
+    body:has(> .rail) .rail .small {
+        width: auto;
+        min-width: max-content;
+        min-height: 44px;
+        flex: 0 0 auto;
+        flex-direction: row !important;
+        justify-content: center;
+        gap: 7px;
+        padding: 8px 11px !important;
+        border: 0 !important;
+        border-bottom: 3px solid transparent !important;
+        font-size: 12px !important;
+        white-space: nowrap;
+    }
+
+    body:has(> .rail) .rail button.active {
+        border-bottom-color: var(--green, #107c41) !important;
+        background: #f0f7f2;
+    }
+
+    body:has(> .rail) .rail .spacer {
+        display: none;
+    }
+
+    body:has(> .rail) #homeView,
+    body:has(> .rail) #editorView {
+        width: 100%;
+        min-width: 0;
+        min-height: calc(100dvh - 54px);
+        flex: 1 0 auto;
+        overflow: visible !important;
+    }
+
+    body:has(> .rail) #homeView {
+        padding: 18px 14px !important;
+    }
+
+    body:has(> .rail) #editorView {
+        height: auto !important;
+    }
+
+    body:has(> .rail) #editorView .bar {
+        position: sticky;
+        z-index: 30;
+        top: 54px;
+        flex-wrap: wrap;
+        gap: 7px;
+        padding: 9px 10px;
+    }
+
+    body:has(> .rail) #editorView .bar button {
+        min-height: 40px;
+        flex: 1 1 auto;
+        white-space: normal;
+    }
+
+    body:has(> .rail) #editorView .gridwrap {
+        width: 100%;
+        min-height: 0;
+        flex: 1 0 auto;
+        align-items: stretch;
+        overflow: visible !important;
+        padding: 12px 8px !important;
+    }
+
+    body:has(> .rail) #editorView .editor-toolbar {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    body:has(> .rail) #editorView .editor-toolbar > * {
+        min-width: min(100%, 150px);
+        flex: 1 1 145px;
+    }
+
+    body:has(> .rail) #editorView .editor-toolbar label {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+    }
+
+    body:has(> .rail) #editorView .editor-toolbar input:not([type="checkbox"]),
+    body:has(> .rail) #editorView .editor-toolbar select {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    body:has(> .rail) #editorView .excel-tabs-container,
+    body:has(> .rail) #editorView .content,
+    body:has(> .rail) #editorView .sheet-label-editor,
+    body:has(> .rail) #editorView .add-table-btn {
+        width: 100%;
+        max-width: none;
+    }
+
+    body:has(> .rail) #editorView .paper {
+        width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+        padding: 12px !important;
+    }
+
+    body:has(> .rail) #editorView .section-table {
+        min-width: 640px;
+    }
+
+    body:has(> .rail) #editorView .denr-form {
+        width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+        padding: 10px !important;
+    }
+
+    body:has(> .rail) #editorView .denr-form table {
+        min-width: 680px;
+    }
+
+    body:has(> .rail) #homeView .templates {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    body:has(> .rail) #homeView .tpl {
+        width: min(100%, 225px);
+    }
+
+    body:has(> .rail) #homeView .list-head {
+        display: none;
+    }
+
+    body:has(> .rail) #homeView .sheet-row {
+        height: auto;
+        min-height: 64px;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        padding: 12px 8px;
+    }
+
+    body:has(> .rail) #homeView .sheet-row .name {
+        min-width: 0;
+        flex: 1 1 calc(100% - 44px);
+        overflow-wrap: anywhere;
+    }
+
+    body:has(> .rail) #homeView .sheet-row .col-date,
+    body:has(> .rail) #homeView .sheet-row .col-status {
+        width: auto;
+        flex: 1 1 40%;
+        font-size: 12px;
+    }
+
+    body:has(> .rail) #homeView .sheet-row .col-actions {
+        width: 36px;
+        flex: 0 0 36px;
+    }
+
+    body:has(> .rail) #templateList .sheet-row .col-date {
+        width: auto;
+        flex: 1 1 65%;
+    }
+
+    body:has(> .rail) #templateList .sheet-row .col-actions {
+        width: 36px;
+        flex: 0 0 36px;
+    }
+
+    #manageUsersPage {
+        max-width: 100%;
+        padding: 16px 10px;
+    }
+
+    #manageUsersPage .topbar,
+    body > main > header {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    #manageUsersPage .nav {
+        width: 100%;
+    }
+
+    #manageUsersPage .cd {
+        padding: 14px 12px;
+    }
+
+    #manageUsersPage .access-profile-form {
+        min-width: 420px;
+    }
+
+    #manageUsersPage #accountsTable {
+        min-width: 1080px;
+    }
+
+    #results {
+        min-width: 0;
+    }
+
+    #scoringForm {
+        width: 100%;
+        min-width: 0;
+        padding: 12px;
+    }
+
+    #scoringForm .template-controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        padding: 12px;
+    }
+
+    #scoringForm .template-controls label,
+    #scoringForm .template-controls input,
+    #scoringForm .template-controls select {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+
+    #scoringForm .position-wrap {
+        width: 100%;
+    }
+
+    #scoringForm #scoringTable {
+        table-layout: fixed;
+    }
+
+    #scoringForm #scoringTable td,
+    #scoringForm #scoringTable th {
+        padding: 5px 4px;
+        overflow-wrap: anywhere;
+    }
+
+    #scoringForm .form-toolbar {
+        align-items: stretch;
+    }
+
+    #scoringForm .form-toolbar-group {
+        width: 100%;
+    }
+
+    #scoringForm .form-toolbar-group > * {
+        min-width: 0;
+        flex: 1 1 0;
+    }
+
+    #positions {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    details.recent-forms {
+        padding: 13px;
+    }
+
+    .resume-dialog,
+    .resume-modal,
+    .pdf-modal {
+        max-height: min(88dvh, 720px);
+        overflow-y: auto;
+    }
+
+    body:has(> .page-nav) {
+        padding: 16px 12px;
+    }
+
+    body:has(> .page-nav) main {
+        width: 100%;
+    }
+
+    body:has(> .page-nav) main > section {
+        padding: 16px;
+    }
+
+    body:has(> .page-nav) main table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body:has(> main) {
+        padding: 20px 12px;
+    }
+
+    body:has(> main) > main {
+        width: 100%;
+    }
+
+    body:has(> main) .card {
+        padding: 16px;
+    }
+
+    body:has(> main) .table-scroll table {
+        min-width: 520px;
+    }
+
+    body:has(> main) form input:not([type="checkbox"]):not([type="radio"]),
+    body:has(> main) form select,
+    body:has(> main) form textarea {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body > main,
+    body > .wrap,
+    body > #results {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .alert,
+    .notice,
+    [role="alert"] {
+        overflow-wrap: anywhere;
+    }
+
+    button,
+    .btn,
+    .button,
+    input[type="submit"] {
+        max-width: 100%;
+    }
+
+    #manageUsersPage .create-account-form,
+    #manageUsersPage .link-candidate-form {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #manageUsersPage .create-account-form > button {
+        grid-column: auto;
+    }
+
+    #manageUsersPage .topbar .nav .btn {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    body:has(> .rail) #editorView .bar #templateTitle {
+        width: 100%;
+        max-width: none;
+        order: 3;
+    }
+
+    body:has(> .rail) #editorView .bar .save-status {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    body:has(> .rail) #editorView .sheet-row .col-date {
+        font-size: 11px;
+    }
+}
+
+:root {
+    --ui-ink: #1c2420;
+    --ui-muted: #68746d;
+    --ui-line: #d6ddd8;
+    --ui-canvas: #f3f6f4;
+    --ui-surface: #fff;
+    --ui-radius: 12px;
+    --ui-shadow: 0 8px 24px rgba(27, 55, 39, .06);
+}
+
+body:has(> main):not(:has(> .rail)) {
+    padding: 32px 16px;
+    background: radial-gradient(ellipse at top left, #e8f2eb 0, transparent 38%), var(--ui-canvas);
+    color: var(--ui-ink);
+    font: 14px/1.5 "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+
+body:has(> main):not(:has(> .rail)) > main {
+    width: min(100%, 1100px);
+    margin: 0 auto;
+}
+
+body:has(> main):not(:has(> .rail)) > main > header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    margin-bottom: 22px;
+}
+
+body:has(> main):not(:has(> .rail)) > main > header h1,
+body:has(> main):not(:has(> .rail)) > main > h1 {
+    color: var(--ui-ink);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -.035em;
+    line-height: 1.2;
+}
+
+body:has(> main):not(:has(> .rail)) > main > p {
+    color: var(--ui-muted);
+}
+
+body:has(> main):not(:has(> .rail)) > main > section,
+body:has(> main):not(:has(> .rail)) > main > .card {
+    margin: 16px 0;
+    padding: clamp(16px, 2.4vw, 24px);
+    border: 1px solid var(--ui-line);
+    border-radius: var(--ui-radius);
+    background: var(--ui-surface);
+    box-shadow: var(--ui-shadow);
+}
+
+body:has(> main):not(:has(> .rail)) > main > section h2 {
+    color: var(--ui-ink);
+    font-size: 1.08rem;
+    letter-spacing: -.015em;
+}
+
+.ui-theme-toggle {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right));
+    top: max(16px, env(safe-area-inset-top));
+    z-index: 9998;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid #cbd6ce;
+    border-radius: 999px;
+    background: #fff;
+    color: #202a35;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, .2);
+    font: 600 13px/1 "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.ui-theme-switch-track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 38px;
+    height: 22px;
+    flex: 0 0 38px;
+    border: 1px solid #87958c;
+    border-radius: 999px;
+    background: #dce3de;
+    transition: background-color .18s ease, border-color .18s ease;
+}
+
+.ui-theme-switch-thumb {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .28);
+    transform: translateY(-50%);
+    transition: transform .18s ease;
+}
+
+.ui-theme-toggle[aria-checked="true"] .ui-theme-switch-track {
+    border-color: #107c41;
+    background: #107c41;
+}
+
+.ui-theme-toggle[aria-checked="true"] .ui-theme-switch-thumb {
+    transform: translate(16px, -50%);
+}
+
+.ui-theme-toggle:focus-visible {
+    outline: 3px solid rgba(16, 124, 65, .35);
+    outline-offset: 3px;
+}
+
+@media screen {
+    html[data-theme="dark"] {
+        color-scheme: dark;
+        background-color: #121815;
+        --ink: #f3f7f4;
+        --muted: #b7c3bb;
+        --line: #334038;
+        --paper: #1c2520;
+        --canvas: #121815;
+        --ui-ink: #f3f7f4;
+        --ui-muted: #b7c3bb;
+        --ui-line: #334038;
+        --ui-canvas: #121815;
+        --ui-surface: #1c2520;
+        --ui-accent: #22c55e;
+        --ui-accent-dark: #16a34a;
+        --ui-focus: rgba(52, 211, 153, .22);
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) {
+        background-color: #121815 !important;
+        background-image: none !important;
+        color: #f3f7f4 !important;
+        color-scheme: dark;
+    }
+
+    html[data-theme="dark"] body.scoring-page {
+        background-color: #121815 !important;
+        color: #e8f0eb !important;
+        color-scheme: dark;
+    }
+    html[data-theme="dark"] body.scoring-page .user-bar {
+        background-color: #1b2620 !important;
+        border: 1px solid #304038 !important;
+        border-radius: 8px;
+        color: #e8f0eb !important;
+        padding: 10px 14px !important;
+        margin: 0 auto 12px !important;
+        max-width: 960px;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 12px;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+    }
+    html[data-theme="dark"] body.scoring-page .user-bar > span {
+        margin: 0;
+        line-height: 1.4;
+    }
+    html[data-theme="dark"] body.scoring-page .user-bar form {
+        margin: 0 !important;
+        display: inline-flex !important;
+        align-items: center;
+    }
+    html[data-theme="dark"] body.scoring-page .user-bar a,
+    html[data-theme="dark"] body.scoring-page .user-bar button,
+    html[data-theme="dark"] body.scoring-page .user-bar button[type="submit"] {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 1px solid #3b4a42 !important;
+        color: #c8d6cf !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    html[data-theme="dark"] body.scoring-page .user-bar a:hover,
+    html[data-theme="dark"] body.scoring-page .user-bar button:hover,
+    html[data-theme="dark"] body.scoring-page .user-bar button[type="submit"]:hover,
+    html[data-theme="dark"] body.scoring-page .user-bar a:focus-visible,
+    html[data-theme="dark"] body.scoring-page .user-bar button:focus-visible,
+    html[data-theme="dark"] body.scoring-page .user-bar button[type="submit"]:focus-visible {
+        background: #2a3831 !important;
+        background-color: #2a3831 !important;
+        border-color: #4a6a56 !important;
+        color: #e8f0eb !important;
+    }
+    html[data-theme="dark"] body.scoring-page .rate-warn,
+    html[data-theme="dark"] body.scoring-page #noScoringFormMessage,
+    html[data-theme="dark"] body.scoring-page #raterPositionMissingMessage,
+    html[data-theme="dark"] body.scoring-page #draftUnavailableNotice {
+        background: #2a2414 !important;
+        border-color: #5a4a20 !important;
+        color: #f6d365 !important;
+    }
+    html[data-theme="dark"] body.scoring-page .user-bar[style*="fdecea"],
+    html[data-theme="dark"] body.scoring-page .user-bar[style*="#fdecea"] {
+        background: #3a1f1d !important;
+        border-color: #6b3a36 !important;
+        color: #ffb4ab !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringForm {
+        background: #18211c !important;
+        border: 1px solid #304038 !important;
+        border-radius: 12px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+        color: #e8f0eb !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable {
+        color: #e8f0eb !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable td,
+    html[data-theme="dark"] body.scoring-page #scoringTable th {
+        border-color: #4a5a51 !important;
+        color: #e8f0eb !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable .header-cell,
+    html[data-theme="dark"] body.scoring-page #scoringTable .header-title,
+    html[data-theme="dark"] body.scoring-page #scoringTable .info-cell,
+    html[data-theme="dark"] body.scoring-page #scoringTable .transparent {
+        border: none !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable .sec-header {
+        background-color: #24352c !important;
+        color: #dff5e7 !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable .comp-title {
+        background-color: #1c2922 !important;
+        color: #f0f6f2 !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable input[type="text"],
+    html[data-theme="dark"] body.scoring-page #scoringTable input[type="number"],
+    html[data-theme="dark"] body.scoring-page #scoringTable select,
+    html[data-theme="dark"] body.scoring-page #scoringTable textarea,
+    html[data-theme="dark"] body.scoring-page #templateControls input,
+    html[data-theme="dark"] body.scoring-page #templateControls select,
+    html[data-theme="dark"] body.scoring-page .form-toolbar input {
+        background: transparent !important;
+        color: #f3f7f4 !important;
+        border-color: #4a5a51 !important;
+        -webkit-text-fill-color: #f3f7f4 !important;
+        color-scheme: dark;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable input::placeholder,
+    html[data-theme="dark"] body.scoring-page #scoringTable textarea::placeholder {
+        color: #8fa096 !important;
+        -webkit-text-fill-color: #8fa096 !important;
+    }
+    html[data-theme="dark"] body.scoring-page #scoringTable select option,
+    html[data-theme="dark"] body.scoring-page #templateControls select option {
+        background: #1b2620;
+        color: #f3f7f4;
+    }
+    html[data-theme="dark"] body.scoring-page #positionDropdown {
+        background: #1b2620 !important;
+        border-color: #3b4a42 !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+    }
+    html[data-theme="dark"] body.scoring-page #positionDropdown .pd-item {
+        color: #e8f0eb !important;
+    }
+    html[data-theme="dark"] body.scoring-page #positionDropdown .pd-item:hover,
+    html[data-theme="dark"] body.scoring-page #positionDropdown .pd-item.active {
+        background: #1f6b41 !important;
+        color: #fff !important;
+    }
+    html[data-theme="dark"] body.scoring-page #positionDropdown .pd-empty {
+        color: #9baaa2 !important;
+    }
+    html[data-theme="dark"] body.scoring-page .position-wrap input#position_input {
+        border-bottom-color: #6a7c72 !important;
+    }
+    html[data-theme="dark"] body.scoring-page .form-toolbar {
+        border-bottom-color: #304038 !important;
+    }
+    html[data-theme="dark"] body.scoring-page .form-toolbar a,
+    html[data-theme="dark"] body.scoring-page .form-toolbar button,
+    html[data-theme="dark"] body.scoring-page .pdf-modal-secondary,
+    html[data-theme="dark"] body.scoring-page #draftUnavailableNotice button {
+        background: #243029 !important;
+        border-color: #3b4a42 !important;
+        color: #e8f0eb !important;
+    }
+    html[data-theme="dark"] body.scoring-page .form-toolbar a:hover,
+    html[data-theme="dark"] body.scoring-page .form-toolbar button:hover:not(:disabled),
+    html[data-theme="dark"] body.scoring-page .pdf-modal-secondary:hover:not(:disabled) {
+        background: #2d3d34 !important;
+        border-color: #4a6a56 !important;
+        color: #9fe0b5 !important;
+    }
+    html[data-theme="dark"] body.scoring-page .form-toolbar .reset-button {
+        color: #ffb4ab !important;
+    }
+    html[data-theme="dark"] body.scoring-page .form-toolbar .reset-button:hover {
+        background: #3a2523 !important;
+        border-color: #7a4a45 !important;
+        color: #ffd2cc !important;
+    }
+    html[data-theme="dark"] body.scoring-page #draftSaveStatus,
+    html[data-theme="dark"] body.scoring-page #templateLoadStatus {
+        color: #b7c8be !important;
+    }
+    html[data-theme="dark"] body.scoring-page #draftSaveStatus:empty,
+    html[data-theme="dark"] body.scoring-page #templateLoadStatus:empty {
+        display: none !important;
+        margin: 0 !important;
+    }
+    html[data-theme="dark"] body.scoring-page #templateControls:not(:has(label)):not(:has(#templateLoadStatus:not(:empty))) {
+        display: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+    }
+    html[data-theme="dark"] body.scoring-page .pdf-modal,
+    html[data-theme="dark"] body.scoring-page .resume-modal {
+        background: #1b2620 !important;
+        border: 1px solid #304038 !important;
+        color: #e8f0eb !important;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45) !important;
+    }
+    html[data-theme="dark"] body.scoring-page .pdf-modal p,
+    html[data-theme="dark"] body.scoring-page .resume-modal p {
+        color: #c8d6cf !important;
+    }
+    html[data-theme="dark"] body.scoring-page .btn-container button,
+    html[data-theme="dark"] body.scoring-page .pdf-modal-primary {
+        background: #1f6b41 !important;
+        border-color: #2d8657 !important;
+        color: #fff !important;
+    }
+    html[data-theme="dark"] body.scoring-page .btn-container button:hover:not(:disabled),
+    html[data-theme="dark"] body.scoring-page .pdf-modal-primary:hover:not(:disabled) {
+        background: #25824f !important;
+    }
+    html[data-theme="dark"] body.scoring-page .btn-container button:disabled,
+    html[data-theme="dark"] body.scoring-page .form-toolbar button:disabled {
+        opacity: 0.5;
+    }
+    html[data-theme="dark"] body.scoring-page .pdf-render-root,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root #scoringForm,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root #scoringTable,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root #scoringTable td,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root #scoringTable th,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root #scoringTable .comp-title,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root #scoringTable .sec-header,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root input,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root select,
+    html[data-theme="dark"] body.scoring-page .pdf-render-root textarea {
+        background: #fff !important;
+        color: #000 !important;
+        -webkit-text-fill-color: #000 !important;
+        border-color: #000 !important;
+        color-scheme: light !important;
+        box-shadow: none !important;
+    }
+    html[data-theme="dark"] body.scoring-page .pdf-render-root #scoringTable .sec-header {
+        background-color: #d9d9d9 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        main, #results, #homeView, #editorView, #login, #register, .lc,
+        .stat-card, .section-card, .action-card, .profile-list div,
+        .cd, .card, .paper, .content,
+        .empty-state, .position, .position-group, .position-card, .position-search,
+        #status, .recent-forms, .recent-form, .table-scroll, .accounts-scroll,
+        .account-shortcuts, .results-navigation, .tabsbar, .excel-tabs-container, .template-tabs,
+        .sheet-label-editor, .gridwrap, .editor-toolbar, .toolbar, .topbar,
+        .sheet-row, .sheet-options, .confirm-dialog, .confirm-dialog-content,
+        .resume-modal, .pdf-modal, .results-alert-dialog, .results-confirm-dialog,
+        .ui-alert-dialog, .ui-confirm-dialog, .ui-alert, .notice, .alert, .status-message
+    ) {
+        background-color: #1e2722 !important;
+        border-color: #304038 !important;
+        color: #f3f7f4 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        .stat-card, .section-card, .action-card, .cd, .card, .position, .position-group,
+        .position-card, .recent-forms, .recent-form, .results-navigation, .tabsbar,
+        .account-shortcuts, .profile-list div
+    ) {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(52, 211, 153, 0.05), 0 0 24px rgba(16, 185, 129, 0.06);
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .position,
+    html[data-theme="dark"] body:not(.scoring-page) .position.unavailable {
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(#login, #register) {
+        background-color: #121815 !important;
+        background-image: none !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) #results {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(#login, #register) .lc,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main .card {
+        background-color: #18241d !important;
+        border-color: rgba(52, 211, 153, 0.22) !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.45),
+            0 0 52px rgba(16, 185, 129, 0.20),
+            0 0 24px rgba(16, 185, 129, 0.14) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(#login, #register) .lc h2,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main h1,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main .card h2 {
+        color: #6ee7a8 !important;
+        text-shadow: 0 0 18px rgba(52, 211, 153, 0.22);
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(#login, #register) .sb,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main button[type="submit"],
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main button:not([type]) {
+        background: linear-gradient(180deg, #16a34a 0%, #107c41 100%) !important;
+        border-color: rgba(110, 231, 168, 0.35) !important;
+        box-shadow: 0 8px 24px rgba(16, 124, 65, 0.35), 0 0 18px rgba(34, 197, 94, 0.18) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(#login, #register) .sb:hover,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main button[type="submit"]:hover,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main button:not([type]):hover {
+        box-shadow: 0 10px 28px rgba(16, 124, 65, 0.42), 0 0 24px rgba(52, 211, 153, 0.24) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(#login, #register) :is(input, select, textarea):focus,
+    html[data-theme="dark"] body:not(.scoring-page) :is(#login, #register) :is(input, select, textarea):focus-visible,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main :is(input, select, textarea):focus,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main > .card) main :is(input, select, textarea):focus-visible {
+        border-color: rgba(110, 231, 168, 0.55) !important;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18), 0 0 18px rgba(52, 211, 153, 0.12) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.sheet-row, .list-head, #templateList, #templateList .template-group-heading) {
+        background-color: #18241d !important;
+        border-color: #304038 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .list-head {
+        background-color: #213128 !important;
+        border-color: #304038 !important;
+        color: #b8c9be !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) #templateList {
+        border-color: #304038 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) #templateList .template-group-heading {
+        background-color: #213128 !important;
+        border-color: #304038 !important;
+        color: #e8f0eb !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .sheet-row {
+        background-color: #18241d !important;
+        border-top-color: transparent !important;
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+        border-bottom-color: #304038 !important;
+        box-shadow: none !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .sheet-row:last-child {
+        border-bottom-color: transparent !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .sheet-row:hover {
+        background-color: #213128 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        h1, h2, h3, h4, h5, h6, p, label, legend, small, span, li, dt, dd,
+        .muted, .mu, .hint, .user-name, .save-status, .section-note, .empty-list,
+        .position-group-heading, .results-save-status, .account-view-switcher, .pagination
+    ) {
+        color: #e8f0eb;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(h1, h2, h3) {
+        text-shadow: 0 0 18px rgba(52, 211, 153, 0.08);
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(svg, svg *) {
+        color: inherit;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) a:not(.position):not(.btn):not(.button):not([class*="hero-"]) {
+        color: #58d68d !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) a.position {
+        color: #f5f5f5 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+        select, textarea, .manage-select-trigger, .manage-select-menu
+    ) {
+        border-color: #3b4a42 !important;
+        background-color: #243029 !important;
+        color: #f3f7f4 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) input::placeholder,
+    html[data-theme="dark"] body:not(.scoring-page) textarea::placeholder {
+        color: #8e8e93 !important;
+        opacity: 1;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .position-group-heading span {
+        color: #b8c9be !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .results-alert-dialog p,
+    html[data-theme="dark"] body:not(.scoring-page) .results-confirm-dialog p,
+    html[data-theme="dark"] body:not(.scoring-page) .import-preview-dialog p {
+        color: #c9d8cf !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        table, th, td, .section-table, .section-table th, .section-table td,
+        #accountsTable th, #accountsTable td, #tables-wrapper th, #tables-wrapper td
+    ) {
+        border-color: #304038 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        table, th, td, .section-table, .section-table th, .section-table td,
+        #accountsTable th, #accountsTable td, #tables-wrapper th, #tables-wrapper td
+    ):not(.g):not(.y):not(.pc):not(.sec-header) {
+        background-color: #18241d !important;
+        color: #e8f0eb !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        button, .btn, .button, input[type="submit"], .ui-alert-button,
+        .ui-confirm-cancel
+    ):not(.primary):not(.p):not(.btn-primary):not(.danger):not(.d) {
+        border-color: #3b4a42 !important;
+        background-color: #243029 !important;
+        color: #f3f7f4 !important;
+        box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.03);
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        button, .btn, .button, input[type="submit"]
+    ):not(.danger):not(.d):hover {
+        border-color: rgba(110, 231, 168, 0.35) !important;
+        box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.08), 0 8px 20px rgba(16, 185, 129, 0.12);
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        .notice.error, .alert-error, .error-message, .notice[role="alert"]
+    ) {
+        border-color: #5c3036 !important;
+        background-color: #2a171b !important;
+        color: #ffb4ab !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        .notice.success, .alert-success, .success-message
+    ) {
+        border-color: #28543a !important;
+        background-color: #14261b !important;
+        color: #9fe0b5 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        .notice.warning, .alert-warning, .rate-warn, .notice-next-step
+    ) {
+        border-color: #5a4a20 !important;
+        background-color: #262010 !important;
+        color: #f6d365 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(
+        .section-table .sec-header, .excel-table .sec-header
+    ) {
+        background-color: #2a2a2d !important;
+        color: #f5f5f5 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.g, .excel-cell-green) {
+        background-color: #1f3d2b !important;
+        color: #d6f5e3 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.y, .excel-cell-yellow) {
+        background-color: #3d3418 !important;
+        color: #fff1a8 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.pc, .excel-cell-pink) {
+        background-color: #3a2230 !important;
+        color: #ffd9eb !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .position-status.ready {
+        border-color: #28543a !important;
+        background-color: #14261b !important;
+        color: #9fe0b5 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .position-status.private {
+        border-color: #5a4a20 !important;
+        background-color: #262010 !important;
+        color: #f6d365 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) .position-status.missing {
+        border-color: #304038 !important;
+        background-color: #213128 !important;
+        color: #e8f0eb !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.badge, .account-scope-label) {
+        border-color: #304038 !important;
+        background-color: #213128 !important;
+        color: #e8f0eb !important;
+    }
+
+    html[data-theme="dark"] .ui-alert-dialog,
+    html[data-theme="dark"] .ui-confirm-dialog {
+        border-color: #304038;
+        background: #18241d;
+        color: #f3f7f4;
+    }
+
+    html[data-theme="dark"] .ui-theme-toggle {
+        border-color: #304038;
+        background: #18241d;
+        color: #f3f7f4;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
+    }
+
+    html[data-theme="dark"] .ui-theme-switch-track {
+        border-color: #4a6a56;
+        background: #243029;
+    }
+
+    html[data-theme="dark"] .ui-theme-toggle[aria-checked="true"] .ui-theme-switch-track {
+        border-color: #34c759;
+        background: #248a3d;
+    }
+}
+
+@media print {
+    .ui-theme-toggle {
+        display: none !important;
+    }
+}
+
+body:has(> main):not(:has(> .rail)) :is(label, legend) {
+    color: #354139;
+    font-weight: 650;
+}
+
+body:has(> main):not(:has(> .rail)) :is(
+    input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+    select
+) {
+    max-width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid #cbd6ce;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--ui-ink);
+}
+
+body:has(> main):not(:has(> .rail)) textarea {
+    max-width: 100%;
+    padding: 10px 11px;
+    border: 1px solid #cbd6ce;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--ui-ink);
+}
+
+body:has(> main):not(:has(> .rail)) :is(input[type="checkbox"], input[type="radio"]) {
+    accent-color: var(--ui-accent);
+}
+
+body:has(> main):not(:has(> .rail)) :is(button, input[type="submit"], .button) {
+    min-height: 42px;
+    padding: 9px 15px;
+    border: 1px solid var(--ui-accent);
+    border-radius: 9px;
+    background: var(--ui-accent);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body:has(> main):not(:has(> .rail)) :is(button.secondary, .button.secondary) {
+    border-color: #cbd6ce;
+    background: #fff;
+    color: var(--ui-ink);
+}
+
+body:has(> main):not(:has(> .rail)) :is(button:disabled, input[type="submit"]:disabled) {
+    opacity: .58;
+    cursor: not-allowed;
+}
+
+body:has(> main):not(:has(> .rail)) a:not(.button):not(.position):not(.recent-actions a) {
+    color: var(--ui-accent-dark);
+    text-underline-offset: 3px;
+}
+
+body:has(> main):not(:has(> .rail)) :is(.recent-actions a, .recent-actions button, .resume-actions button) {
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid #cbd6ce;
+    border-radius: 9px;
+    background: #fff;
+    color: #21412e;
+}
+
+body:has(> main):not(:has(> .rail)) :is(.recent-actions a.primary, .resume-actions button.primary) {
+    border-color: var(--ui-accent);
+    background: var(--ui-accent);
+    color: #fff;
+}
+
+body:has(> main):not(:has(> .rail)) :is(.notice, .alert, [role="alert"]) {
+    border-radius: 10px;
+    line-height: 1.5;
+}
+
+body:has(> main):not(:has(> .rail)) .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--ui-line);
+    border-radius: 10px;
+    background: #fff;
+    -webkit-overflow-scrolling: touch;
+}
+
+body:has(> main):not(:has(> .rail)) table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: var(--ui-ink);
+}
+
+body:has(> main):not(:has(> .rail)) th {
+    background: #edf4ef;
+    color: #34443a;
+    font-weight: 700;
+}
+
+body:has(> main):not(:has(> .rail)) :is(th, td) {
+    border-color: #e5ebe6;
+}
+
+body:has(> main):not(:has(> .rail)) tbody tr:nth-child(even) td {
+    background: #fafcfb;
+}
+
+#manageUsersPage .cd {
+    border-color: var(--ui-line);
+    border-radius: var(--ui-radius);
+    box-shadow: var(--ui-shadow);
+}
+
+#manageUsersPage .topbar h1 {
+    color: var(--ui-ink);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    letter-spacing: -.035em;
+}
+
+#manageUsersPage .table-scroll {
+    border-radius: 10px;
+}
+
+body:has(> .rail) .rail {
+    background: #18382a;
+}
+
+body:has(> .rail) .rail button {
+    min-height: 48px;
+}
+
+body:has(> .rail) .rail button.active {
+    border-left-color: #70c18f;
+    background: rgba(255, 255, 255, .09);
+}
+
+body:has(> .rail) .rail button:hover {
+    background: rgba(255, 255, 255, .12);
+}
+
+body:has(> .rail) #homeView {
+    background: #f7f9f7;
+}
+
+body:has(> .rail) #homeView .templates {
+    gap: 14px;
+    border-color: #e1e8e2;
+}
+
+body:has(> .rail) #homeView .tpl {
+    border: 1px solid #e0e7e1;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 14px rgba(27, 55, 39, .04);
+}
+
+body:has(> .rail) #homeView .tpl:hover {
+    border-color: #a7ccb2;
+    background: #f6fbf7;
+}
+
+body:has(> .rail) .bar {
+    background: linear-gradient(105deg, #18452d, #107c41);
+}
+
+body:has(> .rail) .bar button.primary {
+    border: 1px solid rgba(255, 255, 255, .7);
+    background: #fff;
+    color: #14532d;
+    font-weight: 700;
+}
+
+body:has(> .rail) .bar button.primary:hover:not(:disabled) {
+    background: #edf7ef;
+}
+
+body:has(> .rail) .gridwrap {
+    background: #f3f6f4;
+}
+
+body:has(> .rail) .paper,
+body:has(> .rail) .denr-form {
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(27, 55, 39, .08);
+}
+
+@media (max-width: 760px) {
+    body:has(> main):not(:has(> .rail)) {
+        padding: 22px 12px;
+    }
+
+    body:has(> main):not(:has(> .rail)) > main > header {
+        margin-bottom: 16px;
+    }
+
+    body:has(> main):not(:has(> .rail)) > main > section,
+    body:has(> main):not(:has(> .rail)) > main > .card {
+        padding: 16px;
+    }
+
+    body:has(> main):not(:has(> .rail)) main table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 480px) {
+    body:has(> main):not(:has(> .rail)) {
+        padding: 16px 10px;
+    }
+
+    body:has(> main):not(:has(> .rail)) :is(button, input[type="submit"], .button) {
+        max-width: 100%;
+    }
+
+    body:has(> main):not(:has(> .rail)) > main > header nav {
+        width: 100%;
+    }
+}
+
+/* ============================================================
+   Admin/results glow + dark-mode coverage fixes
+   - Makes admin forms/pages (Manage Users, Bulk Users, Import Positions, Audit History)
+     match the login-style glow in dark mode and feel polished in light mode.
+   - Improves template manager spacing/layout.
+   - Ensures results/admin workspace surfaces glow consistently.
+   ============================================================ */
+
+/* Shared glow accents (light) */
+body:has(> main):not(:has(> .rail)) > main > header,
+#manageUsersPage .topbar,
+body:has(> .rail) .bar {
+    position: relative;
+}
+
+#manageUsersPage .topbar,
+#manageUsersPage .cd,
+body:has(> main):not(:has(> .rail)) > main > section,
+body:has(> main):not(:has(> .rail)) > main > .card {
+    border-top: 3px solid rgba(16, 124, 65, .35);
+    box-shadow: 0 10px 30px rgba(27, 55, 39, .08), 0 0 0 1px rgba(16, 124, 65, .04);
+}
+
+#manageUsersPage .topbar h1,
+body:has(> main):not(:has(> .rail)) > main > header h1,
+body:has(> main):not(:has(> .rail)) > main > h1 {
+    color: #173b27;
+    text-shadow: 0 0 18px rgba(16, 124, 65, .08);
+}
+
+#manageUsersPage .cd,
+body:has(> main):not(:has(> .rail)) > main > section,
+body:has(> main):not(:has(> .rail)) > main > .card {
+    background-image: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,252,249,.98));
+}
+
+#manageUsersPage .cd h2,
+body:has(> main):not(:has(> .rail)) > main > section h2,
+body:has(> main):not(:has(> .rail)) > main > .card h2 {
+    margin-top: 0;
+    color: #173b27;
+}
+
+/* Table/input polish for admin pages */
+body:has(> main):not(:has(> .rail)) table,
+#manageUsersPage table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid var(--ui-line, #d6ddd8);
+    border-radius: 10px;
+    background: var(--ui-surface, #fff);
+}
+
+body:has(> main):not(:has(> .rail)) th,
+body:has(> main):not(:has(> .rail)) td,
+#manageUsersPage th,
+#manageUsersPage td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ui-line, #d6ddd8);
+}
+
+body:has(> main):not(:has(> .rail)) tr:last-child td,
+#manageUsersPage tr:last-child td {
+    border-bottom: 0;
+}
+
+body:has(> main):not(:has(> .rail)) th,
+#manageUsersPage th {
+    background: #f3f8f4;
+    color: #173b27;
+    font-weight: 650;
+}
+
+body:has(> main):not(:has(> .rail)) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea),
+#manageUsersPage :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea) {
+    min-height: 42px;
+    border: 1px solid #cfdad3;
+    border-radius: 8px;
+    padding: 9px 11px;
+    background: #fcfefc;
+}
+
+body:has(> main):not(:has(> .rail)) :is(button, .button, input[type="submit"]),
+#manageUsersPage :is(button, .btn, .button) {
+    border-radius: 8px;
+}
+
+body:has(> main):not(:has(> .rail)) :is(button.primary, .button.primary, #importButton, .btn.primary),
+#manageUsersPage .btn.primary,
+#manageUsersPage button[type="submit"].btn {
+    box-shadow: 0 6px 16px rgba(16,124,65,.16);
+}
+
+/* Template manager spacing/layout fixes */
+body:has(> .rail) .topbar {
+    gap: 12px;
+    padding: 12px 20px;
+}
+body:has(> .rail) .toolbar {
+    gap: 10px;
+    padding: 12px 18px;
+}
+body:has(> .rail) .template-tabs {
+    gap: 4px;
+    padding: 4px 14px 0;
+    min-height: 46px;
+}
+body:has(> .rail) .template-tab {
+    padding: 11px 16px 10px;
+    border-radius: 8px 8px 0 0;
+}
+body:has(> .rail) .content {
+    padding: 22px;
+}
+body:has(> .rail) .paper {
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid rgba(16,124,65,.12);
+    box-shadow: 0 12px 30px rgba(27,55,39,.08), 0 0 0 1px rgba(16,124,65,.03);
+}
+body:has(> .rail) .section-table {
+    margin: 0 0 26px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+body:has(> .rail) .section-table th,
+body:has(> .rail) .section-table td {
+    padding: 8px 10px;
+}
+body:has(> .rail) .section-actions {
+    margin: -10px 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+body:has(> .rail) #homeView .list-head,
+body:has(> .rail) #homeView .sheet-row {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 12px;
+}
+body:has(> .rail) #homeView .sheet-row {
+    min-height: 58px;
+    border-radius: 8px;
+}
+body:has(> .rail) #templateList .template-group-heading {
+    margin-top: 18px;
+    padding: 10px 12px;
+    border-radius: 8px;
+}
+body:has(> .rail) .gridwrap {
+    background:
+        radial-gradient(ellipse at 12% 0%, rgba(16,124,65,.08), transparent 32%),
+        linear-gradient(180deg, #f4f8f5 0%, #edf3ef 100%);
+}
+
+/* Results page glow */
+body:has(#results) #scoringForm,
+body:has(#results) .results-navigation,
+body:has(#results) .template-controls,
+body:has(#results) #tables-wrapper,
+body:has(#results) .table-scroll {
+    border-radius: 14px;
+}
+body:has(#results) #scoringForm {
+    box-shadow: 0 16px 40px rgba(27,55,39,.12), 0 0 0 1px rgba(16,124,65,.05);
+    border-top: 3px solid rgba(16,124,65,.45);
+}
+
+/* Dark mode: extend login-like glow to admin pages */
+@media screen {
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) {
+        background-color: #101a14 !important;
+        background-image:
+            radial-gradient(ellipse 65% 45% at 12% 0%, rgba(34,197,94,.18), transparent 58%),
+            radial-gradient(ellipse 55% 40% at 100% 100%, rgba(16,185,129,.12), transparent 55%),
+            linear-gradient(160deg, #101813 0%, #0f1713 45%, #121b16 100%) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage .topbar,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage .cd,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main > section,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main > .card,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main > header {
+        background-color: #18241d !important;
+        border-color: rgba(52,211,153,.18) !important;
+        border-top-color: rgba(52,211,153,.45) !important;
+        box-shadow:
+            0 0 0 1px rgba(52,211,153,.06),
+            0 20px 48px rgba(0,0,0,.42),
+            0 0 34px rgba(16,185,129,.10) !important;
+        background-image: linear-gradient(180deg, rgba(24,36,29,.98), rgba(20,31,25,.98)) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage .topbar h1,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage .cd h2,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main h1,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main h2,
+    html[data-theme="dark"] body:has(#results) .scoring-form h2,
+    html[data-theme="dark"] body:has(#results) h1 {
+        color: #6ee7a8 !important;
+        text-shadow: 0 0 18px rgba(52,211,153,.22);
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) th,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage th {
+        background: #213128 !important;
+        color: #d9fbe6 !important;
+        border-color: #304038 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) td,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage td,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) table,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage table {
+        border-color: #304038 !important;
+        background-color: #18241d !important;
+        color: #e8f0eb !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) tr:hover td,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage tr:hover td {
+        background-color: #1d2c24 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) .hint,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) p,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage .hint,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage p,
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage label {
+        color: #c9d8cf !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea),
+    html[data-theme="dark"] body:not(.scoring-page) #manageUsersPage :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea) {
+        background-color: #243029 !important;
+        border-color: #3b4a42 !important;
+        color: #f3f7f4 !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) #message {
+        color: #c9d8cf !important;
+    }
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) #message.error,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) .status-error {
+        color: #ffb4ab !important;
+    }
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) .status-update {
+        color: #f6d365 !important;
+    }
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) .status-new {
+        color: #6ee7a8 !important;
+    }
+
+    /* Template manager dark glow */
+    html[data-theme="dark"] body:has(> .rail) .topbar,
+    html[data-theme="dark"] body:has(> .rail) .toolbar,
+    html[data-theme="dark"] body:has(> .rail) .template-tabs,
+    html[data-theme="dark"] body:has(> .rail) .content,
+    html[data-theme="dark"] body:has(> .rail) .paper,
+    html[data-theme="dark"] body:has(> .rail) .rail {
+        background-color: #18241d !important;
+        border-color: #304038 !important;
+        color: #f3f7f4 !important;
+    }
+    html[data-theme="dark"] body:has(> .rail) .bar {
+        background: linear-gradient(105deg, #143b27, #107c41) !important;
+        box-shadow: 0 10px 28px rgba(0,0,0,.28), 0 0 24px rgba(16,185,129,.12);
+    }
+    html[data-theme="dark"] body:has(> .rail) .paper {
+        box-shadow: none !important;
+        border: 0 !important;
+        border-top: 0 !important;
+        background-image: none !important;
+    }
+    html[data-theme="dark"] body:has(> .rail) .gridwrap {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+    }
+    html[data-theme="dark"] body:has(> .rail) .template-tab.active {
+        background: #213128 !important;
+        color: #6ee7a8 !important;
+        border-color: #34d399 !important;
+    }
+    html[data-theme="dark"] body:has(> .rail) .sheet-row:hover,
+    html[data-theme="dark"] body:has(> .rail) #templateList .template-group-heading {
+        background-color: #1d2c24 !important;
+    }
+
+    /* Results page dark mode */
+    html[data-theme="dark"] body:has(#results) #scoringForm,
+    html[data-theme="dark"] body:has(#results) .results-navigation,
+    html[data-theme="dark"] body:has(#results) .template-controls,
+    html[data-theme="dark"] body:has(#results) .tabsbar,
+    html[data-theme="dark"] body:has(#results) #tables-wrapper {
+        background-color: #18241d !important;
+        border-color: rgba(52,211,153,.18) !important;
+        box-shadow: 0 0 0 1px rgba(52,211,153,.06), 0 18px 42px rgba(0,0,0,.38), 0 0 28px rgba(16,185,129,.08) !important;
+        color: #f3f7f4 !important;
+    }
+}
+
+/* Positions import: main is the card container */
+body:has(> main):not(:has(> .rail)) > main {
+    border-top: 3px solid rgba(16,124,65,.35);
+    box-shadow: 0 12px 32px rgba(27,55,39,.10), 0 0 0 1px rgba(16,124,65,.04);
+}
+html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main {
+    background-color: #18241d !important;
+    border-color: rgba(52,211,153,.18) !important;
+    border-top-color: rgba(52,211,153,.45) !important;
+    box-shadow:
+        0 0 0 1px rgba(52,211,153,.06),
+        0 22px 52px rgba(0,0,0,.45),
+        0 0 36px rgba(16,185,129,.10) !important;
+    color: #f3f7f4 !important;
+}
+html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main :is(h1,label,.hint,p) {
+    color: #e8f0eb !important;
+}
+html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main h1 {
+    color: #6ee7a8 !important;
+    text-shadow: 0 0 18px rgba(52,211,153,.22);
+}
+
+/* Stronger glow accents (results, template manager, and admin pages) */
+@media screen {
+    /* Results page */
+    body:has(#results) #scoringForm,
+    body:has(#results) .results-navigation,
+    body:has(#results) .template-controls,
+    body:has(#results) .tabsbar,
+    body:has(#results) #tables-wrapper {
+        border: 1px solid rgba(16,124,65,.22) !important;
+        box-shadow:
+            0 0 0 1px rgba(16,124,65,.06),
+            0 10px 28px rgba(15,23,42,.08),
+            0 0 24px rgba(16,124,65,.10) !important;
+    }
+    body:has(#results) h1,
+    body:has(#results) .scoring-form h2 {
+        text-shadow: 0 0 14px rgba(16,124,65,.12);
+    }
+    html[data-theme="dark"] body:has(#results) #scoringForm,
+    html[data-theme="dark"] body:has(#results) .results-navigation,
+    html[data-theme="dark"] body:has(#results) .template-controls,
+    html[data-theme="dark"] body:has(#results) .tabsbar,
+    html[data-theme="dark"] body:has(#results) #tables-wrapper {
+        background-color: #1c1c1e !important;
+        border: 1px solid #2f2f33 !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.45),
+            0 0 52px rgba(16, 185, 129, 0.20),
+            0 0 24px rgba(16, 185, 129, 0.14) !important;
+    }
+    html[data-theme="dark"] body:has(#results) h1,
+    html[data-theme="dark"] body:has(#results) .scoring-form h2 {
+        color: #6ee7a8 !important;
+        text-shadow: 0 0 20px rgba(52,211,153,.24);
+    }
+
+    /* Template manager */
+    body.template-manager-page > nav.rail {
+        border-right-color: rgba(16,124,65,.18) !important;
+        box-shadow: 2px 0 18px rgba(15,23,42,.06), 0 0 18px rgba(16,124,65,.08);
+    }
+    body:has(> .rail) .template-home-hero,
+    body:has(> .rail) .template-home-panel,
+    body:has(> .rail) .paper,
+    body:has(> .rail) .editor-toolbar,
+    body:has(> .rail) .sheet-label-editor,
+    body:has(> .rail) .excel-tabs-container,
+    body:has(> .rail) .catalog-card {
+        border-color: rgba(16,124,65,.18) !important;
+        box-shadow:
+            0 0 0 1px rgba(16,124,65,.05),
+            0 10px 28px rgba(15,23,42,.08),
+            0 0 22px rgba(16,124,65,.10) !important;
+    }
+    body:has(> .rail) .template-home-hero {
+        box-shadow:
+            0 16px 38px rgba(17,91,48,.20),
+            0 0 0 1px rgba(255,255,255,.10) inset,
+            0 0 30px rgba(16,124,65,.18) !important;
+    }
+    html[data-theme="dark"] body.template-manager-page > nav.rail {
+        border-right-color: rgba(52,211,153,.22) !important;
+        box-shadow: 2px 0 22px rgba(0,0,0,.35), 0 0 24px rgba(16,185,129,.10) !important;
+    }
+    html[data-theme="dark"] body:has(> .rail) .template-home-panel,
+    html[data-theme="dark"] body:has(> .rail) .catalog-card {
+        border-color: rgba(52,211,153,.2) !important;
+        box-shadow:
+            0 0 0 1px rgba(52,211,153,.06),
+            0 16px 36px rgba(0,0,0,.42),
+            0 0 22px rgba(16,185,129,.10) !important;
+    }
+    html[data-theme="dark"] body:has(> .rail) .editor-toolbar,
+    html[data-theme="dark"] body:has(> .rail) .sheet-label-editor,
+    html[data-theme="dark"] body:has(> .rail) .excel-tabs-container {
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    html[data-theme="dark"] body:has(> .rail) .template-home-hero {
+        box-shadow:
+            0 18px 42px rgba(0,0,0,.45),
+            0 0 0 1px rgba(52,211,153,.18),
+            0 0 34px rgba(16,185,129,.16) !important;
+    }
+
+    /* Manage users + admin pages (bulk users, import positions, audit history) */
+    #manageUsersPage .topbar,
+    #manageUsersPage .cd {
+        border: 1px solid rgba(16,124,65,.18) !important;
+        box-shadow:
+            0 0 0 1px rgba(16,124,65,.05),
+            0 10px 26px rgba(15,23,42,.08),
+            0 0 22px rgba(16,124,65,.10) !important;
+    }
+    #manageUsersPage .access-profile-form,
+    #manageUsersPage .create-account-form,
+    #manageUsersPage .link-candidate-form {
+        border: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
+
+    /* Card-based admin pages (e.g. bulk users, audit history): glow cards/header, not wrapper */
+    body:has(> main):not(:has(> .rail)) > main:has(> section, > .card) > header,
+    body:has(> main):not(:has(> .rail)) > main:has(> section, > .card) > section,
+    body:has(> main):not(:has(> .rail)) > main:has(> section, > .card) > .card {
+        border: 1px solid rgba(16,124,65,.18) !important;
+        box-shadow:
+            0 0 0 1px rgba(16,124,65,.05),
+            0 10px 28px rgba(15,23,42,.08),
+            0 0 24px rgba(16,124,65,.10) !important;
+    }
+    body:has(> main):not(:has(> .rail)) > main:has(> section, > .card) > header {
+        box-shadow:
+            0 16px 38px rgba(17,91,48,.18),
+            0 0 0 1px rgba(255,255,255,.08) inset,
+            0 0 28px rgba(16,124,65,.16) !important;
+    }
+    body:has(> main):not(:has(> .rail)) > main:has(> section, > .card) {
+        border: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    /* Single-card admin pages (e.g. import positions): glow the main card only */
+    body:has(> main):not(:has(> .rail)) > main:not(:has(> section)):not(:has(> .card)) {
+        border: 1px solid rgba(16,124,65,.20) !important;
+        box-shadow:
+            0 0 0 1px rgba(16,124,65,.06),
+            0 12px 32px rgba(15,23,42,.10),
+            0 0 26px rgba(16,124,65,.12) !important;
+    }
+
+    html[data-theme="dark"] #manageUsersPage .topbar,
+    html[data-theme="dark"] #manageUsersPage .cd {
+        background-color: #18241d !important;
+        border: 1px solid rgba(52, 211, 153, 0.32) !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.45),
+            0 0 52px rgba(16, 185, 129, 0.20),
+            0 0 24px rgba(16, 185, 129, 0.14) !important;
+    }
+    html[data-theme="dark"] #manageUsersPage .access-profile-form,
+    html[data-theme="dark"] #manageUsersPage .create-account-form,
+    html[data-theme="dark"] #manageUsersPage .link-candidate-form {
+        border: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main:has(> section, > .card) > header,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main:has(> section, > .card) > section,
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main:has(> section, > .card) > .card {
+        background-color: #18241d !important;
+        border: 1px solid rgba(52, 211, 153, 0.32) !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.45),
+            0 0 52px rgba(16, 185, 129, 0.20),
+            0 0 24px rgba(16, 185, 129, 0.14) !important;
+    }
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main:has(> section, > .card) {
+        border: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+    html[data-theme="dark"] body:not(.scoring-page):has(> main):not(:has(> .rail)) > main:not(:has(> section)):not(:has(> .card)) {
+        background-color: #18241d !important;
+        border: 1px solid rgba(52, 211, 153, 0.32) !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.45),
+            0 0 52px rgba(16, 185, 129, 0.20),
+            0 0 24px rgba(16, 185, 129, 0.14) !important;
+    }
+}
+
+    /* Template manager: login-like glow on outer surfaces, seamless inside list (dark mode) */
+    html[data-theme="dark"] body.template-manager-page #homeView,
+    html[data-theme="dark"] body:has(> .rail) #homeView,
+    html[data-theme="dark"] body.template-manager-page #editorView,
+    html[data-theme="dark"] body:has(> .rail) #editorView {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .template-home-panel,
+    html[data-theme="dark"] body:has(> .rail) .template-home-panel {
+        background-color: #18241d !important;
+        background-image: none !important;
+        border: 1px solid rgba(52, 211, 153, 0.32) !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.45),
+            0 0 52px rgba(16, 185, 129, 0.20),
+            0 0 24px rgba(16, 185, 129, 0.14) !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .template-home-hero,
+    html[data-theme="dark"] body:has(> .rail) .template-home-hero {
+        border: 1px solid rgba(52, 211, 153, 0.24) !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.10),
+            0 20px 48px rgba(0, 0, 0, 0.42),
+            0 0 40px rgba(16, 185, 129, 0.16) !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .rail,
+    html[data-theme="dark"] body:has(> .rail) .rail {
+        border-right: 1px solid rgba(52, 211, 153, 0.22) !important;
+        box-shadow: 2px 0 22px rgba(0,0,0,.35), 0 0 28px rgba(16,185,129,.12) !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .bar,
+    html[data-theme="dark"] body:has(> .rail) .bar {
+        border-bottom: 1px solid rgba(52, 211, 153, 0.22) !important;
+        box-shadow: 0 10px 28px rgba(0,0,0,.28), 0 0 24px rgba(16,185,129,.12) !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .editor-toolbar,
+    html[data-theme="dark"] body:has(> .rail) .editor-toolbar,
+    html[data-theme="dark"] body.template-manager-page .sheet-label-editor,
+    html[data-theme="dark"] body:has(> .rail) .sheet-label-editor,
+    html[data-theme="dark"] body.template-manager-page .excel-tabs-container,
+    html[data-theme="dark"] body:has(> .rail) .excel-tabs-container,
+    html[data-theme="dark"] body.template-manager-page .content,
+    html[data-theme="dark"] body:has(> .rail) .content {
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .content,
+    html[data-theme="dark"] body:has(> .rail) .content {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .paper,
+    html[data-theme="dark"] body:has(> .rail) .paper {
+        border: 0 !important;
+        box-shadow: none !important;
+        background-image: none !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .gridwrap,
+    html[data-theme="dark"] body:has(> .rail) .gridwrap,
+    html[data-theme="dark"] body.template-manager-page .template-home-actions,
+    html[data-theme="dark"] body:has(> .rail) .template-home-actions,
+    html[data-theme="dark"] body.template-manager-page .template-home-controls,
+    html[data-theme="dark"] body:has(> .rail) .template-home-controls,
+    html[data-theme="dark"] body.template-manager-page .template-group-jumps,
+    html[data-theme="dark"] body:has(> .rail) .template-group-jumps {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+    html[data-theme="dark"] body.template-manager-page #editorView,
+    html[data-theme="dark"] body:has(> .rail) #editorView,
+    html[data-theme="dark"] body.template-manager-page #editorView .gridwrap,
+    html[data-theme="dark"] body:has(> .rail) #editorView .gridwrap,
+    html[data-theme="dark"] body.template-manager-page #editorView .content,
+    html[data-theme="dark"] body:has(> .rail) #editorView .content,
+    html[data-theme="dark"] body.template-manager-page #editorView .paper,
+    html[data-theme="dark"] body:has(> .rail) #editorView .paper,
+    html[data-theme="dark"] body.template-manager-page #editorView .editor-toolbar,
+    html[data-theme="dark"] body:has(> .rail) #editorView .editor-toolbar,
+    html[data-theme="dark"] body.template-manager-page #editorView .sheet-label-editor,
+    html[data-theme="dark"] body:has(> .rail) #editorView .sheet-label-editor,
+    html[data-theme="dark"] body.template-manager-page #editorView .excel-tabs-container,
+    html[data-theme="dark"] body:has(> .rail) #editorView .excel-tabs-container,
+    html[data-theme="dark"] body.template-manager-page #editorView .section-table,
+    html[data-theme="dark"] body:has(> .rail) #editorView .section-table,
+    html[data-theme="dark"] body.template-manager-page #editorView .section-table th,
+    html[data-theme="dark"] body:has(> .rail) #editorView .section-table th,
+    html[data-theme="dark"] body.template-manager-page #editorView .section-table td,
+    html[data-theme="dark"] body:has(> .rail) #editorView .section-table td {
+        background-image: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+    html[data-theme="dark"] body.template-manager-page #editorView .gridwrap::before,
+    html[data-theme="dark"] body.template-manager-page #editorView .gridwrap::after,
+    html[data-theme="dark"] body.template-manager-page #editorView .content::before,
+    html[data-theme="dark"] body.template-manager-page #editorView .content::after,
+    html[data-theme="dark"] body.template-manager-page #editorView .paper::before,
+    html[data-theme="dark"] body.template-manager-page #editorView .paper::after {
+        content: none !important;
+        display: none !important;
+        background: none !important;
+        box-shadow: none !important;
+        border: 0 !important;
+    }
+    /* Seamless list inside glowing panel (no green separator lines/row boxes) */
+    html[data-theme="dark"] body.template-manager-page #templateList,
+    html[data-theme="dark"] body:has(> .rail) #templateList,
+    html[data-theme="dark"] body.template-manager-page .list-head,
+    html[data-theme="dark"] body:has(> .rail) .list-head,
+    html[data-theme="dark"] body.template-manager-page #templateList .template-group-heading,
+    html[data-theme="dark"] body:has(> .rail) #templateList .template-group-heading,
+    html[data-theme="dark"] body.template-manager-page #templateList .sheet-row,
+    html[data-theme="dark"] body:has(> .rail) #templateList .sheet-row,
+    html[data-theme="dark"] body.template-manager-page .sheet-row,
+    html[data-theme="dark"] body:has(> .rail) .sheet-row,
+    html[data-theme="dark"] body.template-manager-page .sheet-row:hover,
+    html[data-theme="dark"] body:has(> .rail) .sheet-row:hover,
+    html[data-theme="dark"] body.template-manager-page .template-home-controls .tpl,
+    html[data-theme="dark"] body:has(> .rail) .template-home-controls .tpl,
+    html[data-theme="dark"] body.template-manager-page .template-home-controls .tpl:hover,
+    html[data-theme="dark"] body:has(> .rail) .template-home-controls .tpl:hover {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        border-top: 0 !important;
+        border-right: 0 !important;
+        border-bottom: 0 !important;
+        border-left: 0 !important;
+        box-shadow: none !important;
+        outline: none !important;
+    }
+    html[data-theme="dark"] body.template-manager-page .sheet-row .name,
+    html[data-theme="dark"] body:has(> .rail) .sheet-row .name,
+    html[data-theme="dark"] body.template-manager-page .sheet-row .name *,
+    html[data-theme="dark"] body:has(> .rail) .sheet-row .name *,
+    html[data-theme="dark"] body.template-manager-page #templateList .template-group-heading,
+    html[data-theme="dark"] body:has(> .rail) #templateList .template-group-heading,
+    html[data-theme="dark"] body.template-manager-page .sheet-row .col-date,
+    html[data-theme="dark"] body:has(> .rail) .sheet-row .col-date {
+        color: inherit !important;
+        text-shadow: none !important;
+    }
+    html[data-theme="dark"] body.template-manager-page #homeView .sheet-row .name,
+    html[data-theme="dark"] body:has(> .rail) #homeView .sheet-row .name,
+    html[data-theme="dark"] body.template-manager-page #homeView .sheet-row .name:hover,
+    html[data-theme="dark"] body:has(> .rail) #homeView .sheet-row .name:hover,
+    html[data-theme="dark"] body.template-manager-page #homeView .sheet-row .name:focus,
+    html[data-theme="dark"] body:has(> .rail) #homeView .sheet-row .name:focus {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        outline: none !important;
+        color: inherit !important;
+        text-decoration: none !important;
+        text-decoration-color: transparent !important;
+    }
+
+    /* Dashboard: login-like glow on main container with seamless inner sections (dark mode) */
+    html[data-theme="dark"] main.dashboard-admin,
+    html[data-theme="dark"] main.dashboard-rater {
+        background-color: #18241d !important;
+        border: 1px solid rgba(52, 211, 153, 0.32) !important;
+        box-shadow:
+            0 0 0 1px rgba(52, 211, 153, 0.12),
+            0 24px 60px rgba(0, 0, 0, 0.45),
+            0 0 52px rgba(16, 185, 129, 0.20),
+            0 0 24px rgba(16, 185, 129, 0.14) !important;
+        backdrop-filter: none !important;
+    }
+    html[data-theme="dark"] main.dashboard-admin .dashboard-hero,
+    html[data-theme="dark"] main.dashboard-admin .stat-card,
+    html[data-theme="dark"] main.dashboard-admin .section-card,
+    html[data-theme="dark"] main.dashboard-admin .notice,
+    html[data-theme="dark"] main.dashboard-admin .stats,
+    html[data-theme="dark"] main.dashboard-admin .actions,
+    html[data-theme="dark"] main.dashboard-admin .section-heading,
+    html[data-theme="dark"] main.dashboard-admin .backup-status,
+    html[data-theme="dark"] main.dashboard-rater .dashboard-hero,
+    html[data-theme="dark"] main.dashboard-rater .stat-card,
+    html[data-theme="dark"] main.dashboard-rater .section-card,
+    html[data-theme="dark"] main.dashboard-rater .notice,
+    html[data-theme="dark"] main.dashboard-rater .stats,
+    html[data-theme="dark"] main.dashboard-rater .actions,
+    html[data-theme="dark"] main.dashboard-rater .section-heading,
+    html[data-theme="dark"] main.dashboard-rater .backup-status {
+        background: transparent !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        border: 0 !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+    html[data-theme="dark"] main.dashboard-admin .stat-card::after,
+    html[data-theme="dark"] main.dashboard-rater .stat-card::after,
+    html[data-theme="dark"] main.dashboard-admin .dashboard-hero::before,
+    html[data-theme="dark"] main.dashboard-rater .dashboard-hero::before,
+    html[data-theme="dark"] main.dashboard-admin .dashboard-hero::after,
+    html[data-theme="dark"] main.dashboard-rater .dashboard-hero::after {
+        display: none !important;
+        content: none !important;
+        background: transparent !important;
+    }
+    html[data-theme="dark"] main.dashboard-admin .action-card,
+    html[data-theme="dark"] main.dashboard-rater .action-card {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: 1px solid rgba(52, 211, 153, 0.18) !important;
+        box-shadow: none !important;
+    }
+    html[data-theme="dark"] main.dashboard-admin .action-icon,
+    html[data-theme="dark"] main.dashboard-rater .action-icon,
+    html[data-theme="dark"] main.dashboard-admin .stat-icon,
+    html[data-theme="dark"] main.dashboard-rater .stat-icon,
+    html[data-theme="dark"] main.dashboard-admin .section-count,
+    html[data-theme="dark"] main.dashboard-rater .section-count,
+    html[data-theme="dark"] main.dashboard-admin .action-arrow,
+    html[data-theme="dark"] main.dashboard-rater .action-arrow {
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(52, 211, 153, 0.18) !important;
+    }
+
+/* Rail/sidebar buttons: login-like green glow and hover in dark mode */
+html[data-theme="dark"] body:has(> .rail) .rail button,
+html[data-theme="dark"] body:has(> .rail) .rail .small,
+html[data-theme="dark"] body:has(> .rail) .rail form button,
+html[data-theme="dark"] body.template-manager-page .rail button,
+html[data-theme="dark"] body.template-manager-page .rail .small,
+html[data-theme="dark"] body.template-manager-page .rail form button {
+    border: 1px solid rgba(52, 211, 153, 0.32) !important;
+    background-color: rgba(24, 36, 29, 0.92) !important;
+    box-shadow:
+        0 0 0 1px rgba(52, 211, 153, 0.10),
+        0 0 22px rgba(16, 185, 129, 0.14) !important;
+    color: #e5eaf0 !important;
+    transition: background-color .15s ease, box-shadow .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+}
+html[data-theme="dark"] body:has(> .rail) .rail button:hover,
+html[data-theme="dark"] body:has(> .rail) .rail button:focus-visible,
+html[data-theme="dark"] body:has(> .rail) .rail .small:hover,
+html[data-theme="dark"] body:has(> .rail) .rail .small:focus-visible,
+html[data-theme="dark"] body:has(> .rail) .rail form button:hover,
+html[data-theme="dark"] body:has(> .rail) .rail form button:focus-visible,
+html[data-theme="dark"] body.template-manager-page .rail button:hover,
+html[data-theme="dark"] body.template-manager-page .rail button:focus-visible,
+html[data-theme="dark"] body.template-manager-page .rail .small:hover,
+html[data-theme="dark"] body.template-manager-page .rail .small:focus-visible,
+html[data-theme="dark"] body.template-manager-page .rail form button:hover,
+html[data-theme="dark"] body.template-manager-page .rail form button:focus-visible {
+    background-color: #1e3328 !important;
+    border-color: rgba(52, 211, 153, 0.40) !important;
+    box-shadow:
+        0 0 0 1px rgba(52, 211, 153, 0.16),
+        0 0 34px rgba(16, 185, 129, 0.28) !important;
+    color: #ecfdf5 !important;
+}
+html[data-theme="dark"] body:has(> .rail) .rail button.active,
+html[data-theme="dark"] body.template-manager-page .rail button.active {
+    background-color: #203326 !important;
+    border-color: rgba(52, 211, 153, 0.38) !important;
+    box-shadow:
+        0 0 0 1px rgba(52, 211, 153, 0.14),
+        0 0 30px rgba(16, 185, 129, 0.22) !important;
+    color: #b8e4c4 !important;
+}
+
+/* Stronger hover glow for buttons and action cards in dark mode */
+html[data-theme="dark"] .button:hover,
+html[data-theme="dark"] .button:focus-visible,
+html[data-theme="dark"] button[type="submit"]:hover,
+html[data-theme="dark"] button[type="button"]:hover,
+html[data-theme="dark"] .action-card:hover,
+html[data-theme="dark"] .action-card:focus-visible,
+html[data-theme="dark"] a.button:hover,
+html[data-theme="dark"] a.button:focus-visible {
+    border-color: rgba(52, 211, 153, 0.45) !important;
+    box-shadow:
+        0 0 0 1px rgba(52, 211, 153, 0.14),
+        0 0 28px rgba(16, 185, 129, 0.22) !important;
+}
+html[data-theme="dark"] main.dashboard-admin .action-card:hover,
+html[data-theme="dark"] main.dashboard-rater .action-card:hover {
+    background: rgba(24, 36, 29, 0.55) !important;
+    border-color: rgba(52, 211, 153, 0.42) !important;
+    box-shadow:
+        0 0 0 1px rgba(52, 211, 153, 0.12),
+        0 0 30px rgba(16, 185, 129, 0.22) !important;
+}
+
+/* System-wide dark-mode improvements: autofill + accessible focus-visible (no glow artifacts) */
+@media screen {
+    html[data-theme="dark"] body:not(.scoring-page) input:-webkit-autofill,
+    html[data-theme="dark"] body:not(.scoring-page) textarea:-webkit-autofill,
+    html[data-theme="dark"] body:not(.scoring-page) select:-webkit-autofill,
+    html[data-theme="dark"] body:not(.scoring-page) input:-webkit-autofill:hover,
+    html[data-theme="dark"] body:not(.scoring-page) textarea:-webkit-autofill:hover,
+    html[data-theme="dark"] body:not(.scoring-page) select:-webkit-autofill:hover,
+    html[data-theme="dark"] body:not(.scoring-page) input:-webkit-autofill:focus,
+    html[data-theme="dark"] body:not(.scoring-page) textarea:-webkit-autofill:focus,
+    html[data-theme="dark"] body:not(.scoring-page) select:-webkit-autofill:focus {
+        -webkit-text-fill-color: #e8f0eb !important;
+        caret-color: #e8f0eb !important;
+        -webkit-box-shadow: 0 0 0 1000px #243029 inset !important;
+        box-shadow: 0 0 0 1000px #243029 inset !important;
+        border-color: #3b4a42 !important;
+        transition: background-color 9999s ease-out 0s;
+    }
+    html[data-theme="dark"] body:not(.scoring-page) :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+        outline: 2px solid #34d399;
+        outline-offset: 2px;
+    }
+    html[data-theme="dark"] body:not(.scoring-page) :is(input, select, textarea):focus {
+        box-shadow: none;
+    }
+}
+
+/* Refined dark palette and compact theme control */
+@media screen {
+    html[data-theme="dark"] {
+        --ui-canvas: #0f1412;
+        --ui-surface: #171d1a;
+        --ui-line: #303934;
+        --ui-muted: #aab7af;
+        --ui-ink: #edf5f0;
+        background: #0f1412;
+    }
+
+    html[data-theme="dark"] .ui-theme-toggle {
+        min-height: 40px;
+        padding: 7px 11px 7px 8px;
+        border-color: rgba(193, 211, 201, .18);
+        background: rgba(23, 29, 26, .92);
+        box-shadow:
+            0 8px 24px rgba(0, 0, 0, .38),
+            0 0 0 1px rgba(52, 211, 153, .06);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+    html[data-theme="dark"] .ui-theme-switch-track {
+        background: #29312d;
+    }
+
+    html[data-theme="dark"] .ui-theme-switch-thumb {
+        background: #edf5f0;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.card, .cd, .stat-card, .section-card, .action-card, .recent-form, .position-card) {
+        border-color: #303934 !important;
+        background: #171d1a !important;
+        box-shadow:
+            0 14px 38px rgba(0, 0, 0, .24),
+            0 0 0 1px rgba(193, 211, 201, .025) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.card, .cd, .stat-card, .section-card, .action-card, .recent-form, .position-card):hover {
+        border-color: rgba(52, 211, 153, .24) !important;
+    }
+
+    html[data-theme="dark"] body:not(.scoring-page) :is(.lc, .confirm-dialog, .resume-modal, .pdf-modal) {
+        border-color: #303934 !important;
+        background: #171d1a !important;
+        box-shadow: 0 24px 64px rgba(0, 0, 0, .48) !important;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .ui-theme-toggle {
+        right: max(10px, env(safe-area-inset-right));
+        top: max(10px, env(safe-area-inset-top));
+        width: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 8px;
+        border-radius: 50%;
+    }
+
+    .ui-theme-switch-label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+.ui-command-trigger {
+    position: fixed;
+    z-index: 9997;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid #d5dfd8;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .94);
+    color: #26332b;
+    box-shadow: 0 8px 26px rgba(18, 38, 25, .16);
+    font: 650 12px/1 "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.ui-command-trigger-icon {
+    font-size: 23px;
+    line-height: .8;
+    color: #107c41;
+}
+
+.ui-command-trigger kbd {
+    margin-left: 4px;
+    padding: 4px 5px;
+    border: 1px solid #dce4de;
+    border-radius: 5px;
+    background: #f5f8f6;
+    color: #68746d;
+    font: 600 10px/1.1 "Segoe UI", Arial, sans-serif;
+}
+
+.ui-command-dialog {
+    width: min(560px, calc(100vw - 28px));
+    max-width: none;
+    max-height: min(72vh, 620px);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #dce5de;
+    border-radius: 18px;
+    background: #fff;
+    color: #202a35;
+    box-shadow: 0 32px 100px rgba(11, 28, 17, .3);
+}
+
+.ui-command-dialog::backdrop {
+    background: rgba(10, 19, 13, .52);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.ui-command-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 12px;
+}
+
+.ui-command-heading h2 {
+    margin: 0;
+    color: #26332b;
+    font: 700 15px/1.3 "Segoe UI", Arial, sans-serif;
+}
+
+.ui-command-heading > kbd,
+.ui-command-footer kbd {
+    padding: 4px 6px;
+    border: 1px solid #dce4de;
+    border-radius: 5px;
+    background: #f6f8f6;
+    color: #68746d;
+    font: 600 10px/1.2 "Segoe UI", Arial, sans-serif;
+}
+
+.ui-command-search {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0 14px 12px;
+    padding: 0 13px;
+    border: 1px solid #dce5de;
+    border-radius: 11px;
+    background: #f8faf8;
+    color: #708077;
+}
+
+.ui-command-search > span {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.ui-command-search input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #202a35;
+    font: 14px/1.4 "Segoe UI", Arial, sans-serif;
+}
+
+.ui-command-search input:focus-visible {
+    outline: 0;
+}
+
+.ui-command-results {
+    display: grid;
+    max-height: min(48vh, 390px);
+    gap: 4px;
+    padding: 4px 10px 12px;
+    overflow-y: auto;
+}
+
+.ui-command-option {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 11px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: #26332b;
+    text-decoration: none;
+}
+
+.ui-command-option[aria-selected="true"],
+.ui-command-option:hover {
+    border-color: #e0ece3;
+    background: #f1f7f3;
+    color: #145d35;
+}
+
+.ui-command-option span {
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ui-command-option small {
+    overflow: hidden;
+    color: #87938b;
+    font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ui-command-empty {
+    margin: 0;
+    padding: 24px 12px;
+    color: #68746d;
+    font-size: 13px;
+    text-align: center;
+}
+
+.ui-command-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    padding: 10px 18px;
+    border-top: 1px solid #edf1ee;
+    color: #7a867f;
+    font: 11px/1.2 "Segoe UI", Arial, sans-serif;
+}
+
+.ui-command-footer span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+@media screen and (max-width: 640px) {
+    .ui-command-trigger {
+        right: max(12px, env(safe-area-inset-right));
+        bottom: max(12px, env(safe-area-inset-bottom));
+        min-height: 44px;
+        padding: 0 10px;
+    }
+
+    .ui-command-dialog {
+        width: calc(100vw - 20px);
+        border-radius: 14px;
+    }
+
+    .ui-command-option small {
+        max-width: 38%;
+    }
+}
+
+@media screen {
+    html[data-theme="dark"] .ui-command-trigger {
+        border-color: #39453e;
+        background: rgba(23, 29, 26, .94);
+        color: #edf5f0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .45);
+    }
+
+    html[data-theme="dark"] .ui-command-trigger-icon {
+        color: #6ee7a8;
+    }
+
+    html[data-theme="dark"] .ui-command-trigger kbd,
+    html[data-theme="dark"] .ui-command-heading > kbd,
+    html[data-theme="dark"] .ui-command-footer kbd {
+        border-color: #39453e;
+        background: #222b26;
+        color: #b7c3bb;
+    }
+
+    html[data-theme="dark"] .ui-command-dialog {
+        border-color: #39453e;
+        background: #171d1a;
+        color: #edf5f0;
+    }
+
+    html[data-theme="dark"] .ui-command-heading h2,
+    html[data-theme="dark"] .ui-command-option {
+        color: #edf5f0;
+    }
+
+    html[data-theme="dark"] .ui-command-search {
+        border-color: #39453e;
+        background: #111714;
+        color: #aab7af;
+    }
+
+    html[data-theme="dark"] .ui-command-search input {
+        color: #edf5f0;
+    }
+
+    html[data-theme="dark"] .ui-command-option[aria-selected="true"],
+    html[data-theme="dark"] .ui-command-option:hover {
+        border-color: #345240;
+        background: #202d25;
+        color: #a8edc0;
+    }
+
+    html[data-theme="dark"] .ui-command-option small,
+    html[data-theme="dark"] .ui-command-empty,
+    html[data-theme="dark"] .ui-command-footer {
+        color: #aab7af;
+    }
+
+    html[data-theme="dark"] .ui-command-footer {
+        border-color: #303934;
+    }
+}
+
+@media print {
+    .ui-command-trigger,
+    .ui-command-dialog {
+        display: none !important;
+    }
+}
+
+@media screen {
+    body.sheet-picker-page {
+        min-height: 100vh;
+        padding: clamp(18px, 3vw, 46px);
+        background:
+            radial-gradient(ellipse at 82% 2%, rgba(35,149,86,.11), transparent 28%),
+            radial-gradient(ellipse at 2% 48%, rgba(91,165,116,.06), transparent 35%),
+            #f2f6f3;
+        color: #23332a;
+    }
+
+    body.sheet-picker-page > main {
+        width: min(100%, 1440px);
+        gap: 18px;
+    }
+
+    body.sheet-picker-page > main > header {
+        position: relative;
+        min-height: 220px;
+        overflow: hidden;
+        padding: clamp(28px, 5vw, 52px);
+        border: 1px solid rgba(255,255,255,.13);
+        border-radius: 26px;
+        background:
+            radial-gradient(ellipse at 82% 15%, rgba(127,232,169,.2), transparent 31%),
+            linear-gradient(118deg, #0b2117 0%, #103c25 52%, #126438 100%);
+        box-shadow: 0 24px 60px rgba(13,61,34,.18), inset 0 1px 0 rgba(255,255,255,.12);
+    }
+
+    body.sheet-picker-page > main > header::after {
+        position: absolute;
+        top: -190px;
+        right: 12%;
+        width: 360px;
+        height: 360px;
+        border: 1px solid rgba(211,255,226,.18);
+        border-radius: 50%;
+        box-shadow: 0 0 0 28px rgba(211,255,226,.03), 0 0 0 56px rgba(211,255,226,.02);
+        content: "";
+        pointer-events: none;
+    }
+
+    body.sheet-picker-page > main > header > div {
+        position: relative;
+        z-index: 1;
+    }
+
+    body.sheet-picker-page > main > header > div:first-child {
+        max-width: 720px;
+    }
+
+    body.sheet-picker-page > main > header h1 {
+        max-width: 720px;
+        color: #fff;
+        font-size: clamp(30px, 4vw, 44px);
+        letter-spacing: -.05em;
+    }
+
+    body.sheet-picker-page > main > header .user-bar {
+        justify-content: flex-end;
+        color: rgba(235,255,242,.76);
+        font-size: 12px;
+    }
+
+    body.sheet-picker-page > main > header .user-bar a,
+    body.sheet-picker-page > main > header .user-bar button {
+        min-height: 38px;
+        border-color: rgba(255,255,255,.32);
+        background: rgba(255,255,255,.1);
+        color: #fff;
+        box-shadow: none;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    body.sheet-picker-page #status,
+    body.sheet-picker-page .position-search,
+    body.sheet-picker-page details.recent-forms,
+    body.sheet-picker-page .position-group {
+        border-color: #e0e8e2;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 10px 28px rgba(23,51,33,.045), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+
+    body.sheet-picker-page #status {
+        padding: 16px 19px;
+        color: #53665a;
+        font-size: 13px;
+    }
+
+    body.sheet-picker-page .position-search {
+        padding: 17px 19px;
+    }
+
+    body.sheet-picker-page .position-search label {
+        color: #33473a;
+        font-size: 12px;
+        letter-spacing: .035em;
+    }
+
+    body.sheet-picker-page #positionSearch {
+        min-height: 48px;
+        border-color: #d4dfd7;
+        border-radius: 11px;
+        background: #f8faf8;
+        color: #26332b;
+        transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+    }
+
+    body.sheet-picker-page #positionSearch:focus {
+        border-color: #3a9a5d;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(48,151,84,.12);
+        outline: 0;
+    }
+
+    body.sheet-picker-page .position-group {
+        padding: clamp(16px, 2.2vw, 24px);
+        background: rgba(255,255,255,.82);
+    }
+
+    body.sheet-picker-page .position-group-heading {
+        border-color: #e8eee9;
+    }
+
+    body.sheet-picker-page .position-group-heading h2 {
+        color: #293a30;
+    }
+
+    body.sheet-picker-page .position-group-heading span {
+        color: #718078;
+    }
+
+    body.sheet-picker-page .position {
+        position: relative;
+        min-height: 132px;
+        overflow: hidden;
+        padding: 19px;
+        border-color: #e0e8e2;
+        border-radius: 14px;
+        background: linear-gradient(145deg,#fff,#fbfdfb);
+        box-shadow: 0 4px 14px rgba(23,51,33,.035);
+        transition: transform .2s cubic-bezier(.2,.7,.2,1), border-color .2s ease, box-shadow .2s ease;
+    }
+
+    body.sheet-picker-page a.position::after {
+        position: absolute;
+        top: -36px;
+        right: -36px;
+        width: 92px;
+        height: 92px;
+        border: 1px solid rgba(28,129,69,.11);
+        border-radius: 50%;
+        box-shadow: 0 0 0 14px rgba(28,129,69,.025);
+        content: "";
+        pointer-events: none;
+    }
+
+    body.sheet-picker-page a.position:hover {
+        transform: translateY(-4px);
+        border-color: #9dc9aa;
+        background: linear-gradient(145deg,#fff,#f5fbf6);
+        box-shadow: 0 16px 30px rgba(27,75,43,.1);
+    }
+
+    body.sheet-picker-page .position h2 {
+        color: #245c39;
+        font-size: 16px;
+        letter-spacing: -.015em;
+    }
+
+    body.sheet-picker-page .position-status {
+        border: 1px solid transparent;
+        font-size: 10px;
+        letter-spacing: .025em;
+        text-transform: uppercase;
+    }
+
+    body.sheet-picker-page .position-status.ready {
+        border-color: #d3ead9;
+        background: #edf8f0;
+        color: #27623d;
+    }
+
+    body.sheet-picker-page .position-status.private {
+        border-color: #f0dfb0;
+        background: #fff8e6;
+        color: #805c0a;
+    }
+
+    body.sheet-picker-page .position-status.missing {
+        border-color: #e1e6e2;
+        background: #f2f4f3;
+        color: #64736a;
+    }
+
+    body.sheet-picker-page details.recent-forms {
+        padding: 16px 19px;
+    }
+
+    body.sheet-picker-page details.recent-forms summary {
+        color: #286341;
+    }
+
+    body.sheet-picker-page .recent-form {
+        border-color: #e8eee9;
+    }
+
+    body.sheet-picker-page .recent-actions a,
+    body.sheet-picker-page .recent-actions button,
+    body.sheet-picker-page .resume-actions button {
+        border-radius: 10px;
+    }
+
+    body.scoring-page {
+        min-height: 100vh;
+        margin: 0;
+        padding: clamp(16px, 2.5vw, 32px);
+        background:
+            radial-gradient(ellipse at 88% 0%, rgba(35,149,86,.1), transparent 30%),
+            #f2f6f3;
+        color: #27342c;
+    }
+
+    body.scoring-page #scoringForm {
+        width: min(100%, 1440px);
+        max-width: 1440px;
+        padding: clamp(16px, 2.4vw, 30px);
+        border: 1px solid #e0e8e2;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 18px 48px rgba(23,51,33,.075), inset 0 1px 0 #fff;
+    }
+
+    body.scoring-page .user-bar {
+        width: min(100%, 1440px);
+        max-width: 1440px;
+        min-height: 48px;
+        padding: 8px 13px;
+        border: 1px solid #e0e8e2;
+        border-radius: 12px;
+        background: rgba(255,255,255,.82);
+        color: #5b6b61;
+        box-shadow: 0 5px 16px rgba(23,51,33,.035);
+    }
+
+    body.scoring-page .user-bar button {
+        border: 1px solid #dfe7e1;
+        border-radius: 9px;
+        background: #f8faf8;
+        color: #58675e;
+    }
+
+    body.scoring-page .form-toolbar {
+        position: sticky;
+        top: 10px;
+        z-index: 25;
+        margin: -4px 0 18px;
+        padding: 10px 11px;
+        border: 1px solid rgba(219,229,221,.9);
+        border-radius: 13px;
+        background: rgba(250,252,250,.91);
+        box-shadow: 0 8px 22px rgba(23,51,33,.065);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+
+    body.scoring-page #scoringForm .template-controls {
+        max-width: none;
+        margin: 0 0 17px;
+        padding: 16px;
+        border: 1px solid #e1e9e3;
+        border-radius: 13px;
+        background: linear-gradient(145deg,#fbfdfb,#f5f9f6);
+        box-shadow: inset 0 1px 0 #fff;
+    }
+
+    body.scoring-page #scoringForm .template-controls label {
+        color: #34493b;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    body.scoring-page #scoringForm .template-controls :is(input, select) {
+        min-height: 42px;
+        padding: 9px 11px;
+        border: 1px solid #d6e0d8;
+        border-radius: 9px;
+        background: #fff;
+        color: #26332b;
+    }
+
+    body.scoring-page .scoring-table-scroll {
+        overflow-x: auto;
+        border: 1px solid #e1e8e2;
+        border-radius: 13px;
+        background: #fff;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body.scoring-page #scoringTable {
+        overflow: hidden;
+        border-collapse: collapse;
+        border-spacing: 0;
+        color: #36443b;
+    }
+
+    body.scoring-page #scoringTable td,
+    body.scoring-page #scoringTable th {
+        padding: 10px 12px;
+        border-color: #e3e9e4;
+    }
+
+    body.scoring-page #scoringTable .header-cell {
+        color: #697970;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .035em;
+    }
+
+    body.scoring-page #scoringTable .header-title {
+        padding: 16px 8px;
+        color: #1d5e36;
+        font-size: 19px;
+        letter-spacing: .045em;
+    }
+
+    body.scoring-page #scoringTable .info-cell {
+        padding: 8px 12px;
+        color: #47574d;
+        font-weight: 600;
+    }
+
+    body.scoring-page #scoringTable .sec-header {
+        padding: 10px 12px;
+        border-color: #1a6037 !important;
+        background: linear-gradient(110deg,#124d2c,#1b7542) !important;
+        color: #fff !important;
+        font-size: 12px;
+        letter-spacing: .055em;
+        text-transform: uppercase;
+    }
+
+    body.scoring-page #scoringTable .comp-title {
+        background: #f1f7f3;
+        color: #225b37;
+        font-size: 12px;
+        letter-spacing: .015em;
+    }
+
+    body.scoring-page #scoringTable :is(input[type="text"], input[type="number"], select, textarea) {
+        min-height: 38px;
+        padding: 7px 9px;
+        border: 1px solid #dce5de;
+        border-radius: 7px;
+        background: #fbfcfb;
+        color: #25342b;
+        transition: border-color .16s ease, box-shadow .16s ease, background-color .16s ease;
+    }
+
+    body.scoring-page #scoringTable :is(input[type="text"], input[type="number"], select, textarea):focus {
+        border-color: #51a66e;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(48,151,84,.11);
+        outline: 0;
+    }
+
+    body.scoring-page #scoringTable input[type="number"] {
+        min-width: 66px;
+        font-variant-numeric: tabular-nums;
+    }
+
+    body.scoring-page #draftSaveStatus {
+        padding: 0 3px;
+        color: #597064 !important;
+        font-weight: 600;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page {
+        background:
+            radial-gradient(ellipse at 84% 2%, rgba(23,105,61,.19), transparent 28%),
+            #0e1411 !important;
+        color: #e7f0e9 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page > main > header {
+        border-color: rgba(168,237,192,.15) !important;
+        background:
+            radial-gradient(ellipse at 82% 15%, rgba(74,203,123,.14), transparent 31%),
+            linear-gradient(118deg,#101b15 0%,#112c1c 52%,#12462a 100%) !important;
+        box-shadow: 0 24px 60px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.07) !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page #status,
+    html[data-theme="dark"] body.sheet-picker-page .position-search,
+    html[data-theme="dark"] body.sheet-picker-page details.recent-forms,
+    html[data-theme="dark"] body.sheet-picker-page .position-group {
+        border-color: #2b3930 !important;
+        background: #171d1a !important;
+        color: #b9c9bf !important;
+        box-shadow: 0 12px 30px rgba(0,0,0,.16) !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page .position-group-heading {
+        border-color: #29352e !important;
+        color: #e7f0e9 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page .position-group-heading h2,
+    html[data-theme="dark"] body.sheet-picker-page .position-search label {
+        color: #e7f0e9 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page .position-group-heading span,
+    html[data-theme="dark"] body.sheet-picker-page #noPositionMatches {
+        color: #a1b1a7 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page #positionSearch {
+        border-color: #39453e !important;
+        background: #111714 !important;
+        color: #edf5f0 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page #positionSearch:focus {
+        border-color: #4b9b66 !important;
+        background: #151d18 !important;
+        box-shadow: 0 0 0 4px rgba(81,189,120,.12) !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page #positions .position {
+        border-color: #303c34 !important;
+        background: linear-gradient(145deg,#1b231e,#171d1a) !important;
+        color: #b9c9bf !important;
+        box-shadow: 0 8px 22px rgba(0,0,0,.15) !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page #positions .position h2 {
+        color: #dff3e4 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page #positions a.position:hover {
+        border-color: #477354 !important;
+        background: linear-gradient(145deg,#202d25,#19251e) !important;
+        box-shadow: 0 16px 32px rgba(0,0,0,.28), 0 0 0 1px rgba(104,217,143,.05) !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page .position-status.ready {
+        border-color: #345240 !important;
+        background: #1b2b20 !important;
+        color: #a8e3b8 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page .position-status.private {
+        border-color: #5b4b22 !important;
+        background: #2b2414 !important;
+        color: #f0d47a !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page .position-status.missing {
+        border-color: #39453e !important;
+        background: #222b26 !important;
+        color: #bac6be !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page details.recent-forms summary,
+    html[data-theme="dark"] body.sheet-picker-page .recent-actions a {
+        color: #9ee5b2 !important;
+    }
+
+    html[data-theme="dark"] body.sheet-picker-page .recent-form {
+        border-color: #29352e !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page {
+        background:
+            radial-gradient(ellipse at 88% 0%, rgba(23,105,61,.18), transparent 30%),
+            #0e1411 !important;
+        color: #e7f0e9 !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringForm {
+        border-color: #2b3930 !important;
+        border-radius: 20px !important;
+        background: #151c18 !important;
+        box-shadow: 0 20px 56px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.025) !important;
+        color: #e7f0e9 !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page .user-bar {
+        border-color: #2b3930 !important;
+        background: rgba(23,29,26,.86) !important;
+        color: #b9c9bf !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page .form-toolbar {
+        border-color: #303c34 !important;
+        background: rgba(23,29,26,.92) !important;
+        box-shadow: 0 8px 22px rgba(0,0,0,.24) !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringForm .template-controls {
+        border-color: #303c34 !important;
+        background: linear-gradient(145deg,#1a231d,#171e19) !important;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringForm .template-controls label,
+    html[data-theme="dark"] body.scoring-page #scoringTable .info-cell {
+        color: #c4d2c9 !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringForm .template-controls :is(input, select),
+    html[data-theme="dark"] body.scoring-page #scoringTable :is(input[type="text"], input[type="number"], select, textarea) {
+        border-color: #3a4840 !important;
+        border-radius: 7px !important;
+        background: #111714 !important;
+        color: #edf5f0 !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringTable td,
+    html[data-theme="dark"] body.scoring-page #scoringTable th {
+        border-color: #303c34 !important;
+        background-color: #151c18 !important;
+        color: #e7f0e9 !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringTable .header-cell {
+        background-color: #151c18 !important;
+        color: #a6b6ac !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringTable .header-title {
+        background-color: #151c18 !important;
+        color: #a8e3b8 !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringTable .comp-title {
+        background: #1c2921 !important;
+        color: #c5ebd0 !important;
+    }
+
+    html[data-theme="dark"] body.scoring-page #scoringTable :is(input[type="text"], input[type="number"], select, textarea):focus {
+        border-color: #4d9d68 !important;
+        background: #151d18 !important;
+        box-shadow: 0 0 0 3px rgba(81,189,120,.12) !important;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    body.sheet-picker-page {
+        padding: 18px 14px;
+    }
+
+    body.sheet-picker-page > main > header {
+        min-height: 210px;
+        padding: 24px;
+    }
+
+    body.sheet-picker-page > main > header .user-bar {
+        justify-content: flex-start;
+    }
+
+    body.scoring-page #scoringForm {
+        padding: 16px 12px;
+        border-radius: 15px;
+    }
+
+    body.scoring-page #scoringTable td,
+    body.scoring-page #scoringTable th {
+        padding: 7px 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body.sheet-picker-page {
+        padding: 12px;
+    }
+
+    body.sheet-picker-page > main > header {
+        min-height: 0;
+        padding: 22px 18px;
+        border-radius: 18px;
+    }
+
+    body.sheet-picker-page > main > header h1 {
+        font-size: 29px;
+    }
+
+    body.sheet-picker-page .position {
+        min-height: 110px;
+        padding: 16px;
+    }
+
+    body.scoring-page #scoringForm {
+        padding: 12px 8px;
+        border-radius: 0;
+    }
+
+    body.scoring-page .scoring-table-scroll {
+        border-radius: 9px;
+    }
+}
+
+@media print {
+    body.scoring-page {
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    body.scoring-page #scoringForm {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    body.scoring-page .scoring-table-scroll {
+        width: 100% !important;
+        max-width: none !important;
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+    }
+
+    body.scoring-page #scoringTable {
+        width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+        overflow: visible !important;
+        color: #000 !important;
+    }
+
+    body.scoring-page #scoringTable td,
+    body.scoring-page #scoringTable th {
+        padding: 4px 6px !important;
+        border: 1px solid #444 !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    body.scoring-page #scoringTable .header-cell,
+    body.scoring-page #scoringTable .header-title,
+    body.scoring-page #scoringTable .info-cell {
+        border: 0 !important;
+        background: transparent !important;
+    }
+
+    body.scoring-page #scoringTable .sec-header {
+        border: 1px solid #444 !important;
+        background: #e6e6e6 !important;
+        color: #000 !important;
+    }
+
+    body.scoring-page #scoringTable .comp-title {
+        background: #f2f2f2 !important;
+        color: #000 !important;
+    }
+
+    body.scoring-page #scoringTable :is(input[type="text"], input[type="number"], select, textarea) {
+        min-height: 0 !important;
+        padding: 0 2px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: #000 !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+}
